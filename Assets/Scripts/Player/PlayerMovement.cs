@@ -111,7 +111,6 @@ public class PlayerMovement : MonoBehaviour
         if (hit2D.collider)
         {
             distance = hit2D.distance;
-            Debug.Log(hit2D.distance);
             rigidBody.AddForce(-legDirection * legJumpForce, ForceMode2D.Impulse);
         }
 
@@ -130,8 +129,6 @@ public class PlayerMovement : MonoBehaviour
 
         reelForce = grappleReelSpeed * playerInput.vertical
                                      * (grappleJoint.transform.position - transform.position).normalized;
-
-
     }
 
     private void GrappleFire()
