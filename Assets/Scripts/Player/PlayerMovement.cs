@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mousePosition = Vector2.zero;
             
         if (Camera.main) mousePosition = Camera.main.ScreenToWorldPoint(
-             new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+             new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
             
         Vector2 moveDirection = (mousePosition - (Vector2)transform.position).normalized;
         
