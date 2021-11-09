@@ -138,4 +138,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grappleLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
