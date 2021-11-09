@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     private PlayerInput playerInput;
+    private Rigidbody2D rigidBody;
 
     [Header("Grapple")]
     [SerializeField]
@@ -16,23 +17,32 @@ public class PlayerMovement : MonoBehaviour
     private float grappleHookProjectileSpeed = 10;
     [SerializeField, Range(0, 50)]
     private float grappleReelSpeed = 2;
-    
-    
-
-    private bool isGrappling = false;
-
-    private GrappleHook grappleHook;
-
-    private Rigidbody2D rigidBody;
-
     [SerializeField]
     private GameObject grappleJointPrefab;
-
+    
+    private bool isGrappling = false;
+    private GrappleHook grappleHook;
     private GrappleJoint grappleJoint;
-
     private List<Vector2> grappleRopePoint = new List<Vector2>();
-
     private Vector2 reelForce;
+
+
+    [Space]
+    [Header("Leg")]
+    [SerializeField]
+    private LegController legController;
+    [SerializeField]
+    private float legMaxLenght = 2;
+    [SerializeField]
+    private float legJumpForce = 1;
+    [SerializeField]
+    private float legExtendSpeed = 2;
+    [SerializeField]
+    private float legRetractSpeed = 2;
+    [SerializeField]
+    private LayerMask legCollisionMask;
+
+    private Vector2 legDirection;
     
     // Start is called before the first frame update
     void Awake()
@@ -45,14 +55,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GrapplingHockInput();
+        GrapplingHockInputs();
         GrappleMovement();
+        LegInputs();
     }
 
     /// <summary>
     /// >Reads Input and Sends raycast for grapple hock
     /// </summary>
-    void GrapplingHockInput()
+    private void GrapplingHockInputs()
     {
         if (playerInput.rightMouseButtonPressedDown)
         {
@@ -63,7 +74,50 @@ public class PlayerMovement : MonoBehaviour
         {
             GrappleRetract();
         }
+    }
+
+    private void LegRotation()
+    {
+        Vector2 mousePosition = Vector2.zero;
+            
+        if (Camera.main) mousePosition = Camera.main.ScreenToWorldPoint(
+            new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+            
+        legDirection = (mousePosition - (Vector2)transform.position).normalized;
         
+        //legController.UpdateLegDirection(legDirection);
+    }
+
+    private void LegInputs()
+    {
+        if (playerInput.leftMouseButtonPressedDown)
+        {
+            ExtendLeg();
+        }
+
+        if (playerInput.leftMouseButtonPressedUp)
+        {
+            legController.RetractLeg(legRetractSpeed);
+        }
+    }
+
+    private void ExtendLeg()
+    {
+        LegRotation();
+        RaycastHit2D hit2D
+            = Physics2D.Raycast(transform.position, legDirection, legMaxLenght, legCollisionMask);
+
+        float distance = legMaxLenght;
+        if (hit2D.collider)
+        {
+            distance = hit2D.distance;
+            rigidBody.AddForce(-legDirection * legJumpForce, ForceMode2D.Impulse);
+        }
+
+        distance = Mathf.Min(distance, legMaxLenght);
+        legController.ExtendLeg(distance, legExtendSpeed / distance, legDirection);
+
+
     }
 
     private void GrappleMovement()
@@ -75,8 +129,6 @@ public class PlayerMovement : MonoBehaviour
 
         reelForce = grappleReelSpeed * playerInput.vertical
                                      * (grappleJoint.transform.position - transform.position).normalized;
-
-
     }
 
     private void GrappleFire()
