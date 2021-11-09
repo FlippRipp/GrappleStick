@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8cf697b564f2c3c40b66a9e822fb14a2
+guid: 25a281ffff426d74eafc535f564c5bbb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -140,7 +140,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dark_lvl4_0
+      name: Dark_lvl0_0
       rect:
         serializedVersion: 2
         x: 0
@@ -154,14 +154,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6bec90fcaa71b74ab997b807aae1e11
-      internalID: 1559107586
+      spriteID: 2e18ff540910599479481932633bd152
+      internalID: -318575033
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_1
+      name: Dark_lvl0_1
       rect:
         serializedVersion: 2
         x: 64
@@ -175,14 +175,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81d186edc9c59e64da839d8a2b5e244b
-      internalID: -1780840553
+      spriteID: 5914e738a2953f640a9535094cf15e34
+      internalID: -1748013801
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_2
+      name: Dark_lvl0_2
       rect:
         serializedVersion: 2
         x: 128
@@ -196,14 +196,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e53dc00648f2d944a673e4025fdc3fe
-      internalID: 923428240
+      spriteID: 55c2c24e75817d34d93a05adc203dfe7
+      internalID: 1303668123
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_3
+      name: Dark_lvl0_3
       rect:
         serializedVersion: 2
         x: 256
@@ -217,14 +217,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71815fb2b28725e47a7f537d258bf46b
-      internalID: 432428585
+      spriteID: 6a981fdf5b28a104c84a5386a34e7e50
+      internalID: -40079283
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_4
+      name: Dark_lvl0_4
       rect:
         serializedVersion: 2
         x: 320
@@ -238,14 +238,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 614d533b67525cf4a9ca28e717be1b2b
-      internalID: -1428852005
+      spriteID: 2085c4dd690877446a80773528f87e6a
+      internalID: 989626352
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_5
+      name: Dark_lvl0_5
       rect:
         serializedVersion: 2
         x: 448
@@ -259,14 +259,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e6960dd90f9ede47b8f37f41f1a4118
-      internalID: -1089739453
+      spriteID: 616fe49bb7f793547a8750014cb2c553
+      internalID: -537664104
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_6
+      name: Dark_lvl0_6
       rect:
         serializedVersion: 2
         x: 576
@@ -280,14 +280,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f274d5262c12c04d80b4fa786c2bd3c
-      internalID: 1231464917
+      spriteID: 7ebb4baa1d24b7648ab411efa8f9a334
+      internalID: 2060497759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_7
+      name: Dark_lvl0_7
       rect:
         serializedVersion: 2
         x: 0
@@ -301,14 +301,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63e805e103be18c4eb5c5c5bed969cf8
-      internalID: 855318582
+      spriteID: f0f74f12be483a342b49d9926aa34cd7
+      internalID: -1730794617
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_8
+      name: Dark_lvl0_8
       rect:
         serializedVersion: 2
         x: 64
@@ -322,14 +322,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7a84fc9105657949aa99e81541082dd
-      internalID: 1250655663
+      spriteID: 6a0a80514e2d41e4683f24879d94e013
+      internalID: 2007660728
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_9
+      name: Dark_lvl0_9
       rect:
         serializedVersion: 2
         x: 128
@@ -343,14 +343,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f2a9f9cad45c9d45937e5592baeef7c
-      internalID: -1787640833
+      spriteID: 6654fab52ee336746b70c5c2e2ca865f
+      internalID: -1767363723
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_10
+      name: Dark_lvl0_10
       rect:
         serializedVersion: 2
         x: 256
@@ -364,14 +364,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b0ccfd5d4111b8438130dfe5997d1f9
-      internalID: -732411859
+      spriteID: c748656fa676bab48ae1731279badf0b
+      internalID: -390530292
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_11
+      name: Dark_lvl0_11
       rect:
         serializedVersion: 2
         x: 320
@@ -385,14 +385,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9277f23bfb5ef6d4bb09da5f99cf515a
-      internalID: 437120476
+      spriteID: 339d8a1334ab5804aa92e1f8e8cb8c06
+      internalID: -1259548383
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_12
+      name: Dark_lvl0_12
       rect:
         serializedVersion: 2
         x: 448
@@ -406,14 +406,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 241c0a96801859348b491e9acebc7bf0
-      internalID: 835883142
+      spriteID: be5d1c0cb2732d54aa19178237678fb8
+      internalID: -1282648841
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_13
+      name: Dark_lvl0_13
       rect:
         serializedVersion: 2
         x: 0
@@ -427,14 +427,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66edf8ac32cb3e44cb0b0660539e6717
-      internalID: 1189812772
+      spriteID: d72855860db30734aa1823dd83f5d819
+      internalID: 820005648
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_14
+      name: Dark_lvl0_14
       rect:
         serializedVersion: 2
         x: 64
@@ -448,14 +448,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f16af9cba65c52740b3e55034bed086e
-      internalID: 942365477
+      spriteID: 953b12873b9d1be4c8e8afe5c1e43007
+      internalID: -1104626653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_15
+      name: Dark_lvl0_15
       rect:
         serializedVersion: 2
         x: 128
@@ -469,14 +469,56 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ad7fe5474db7704484b43108fa4c4a6
-      internalID: 20198092
+      spriteID: c5b34082316607646ba99a5bde98f14f
+      internalID: -911421570
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_16
+      name: Dark_lvl0_16
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b10e32a302a45034493706f0213d8572
+      internalID: -1175660752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark_lvl0_17
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22b84602d0ffd974cb748a34ef730462
+      internalID: -1424323349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark_lvl0_18
       rect:
         serializedVersion: 2
         x: 448
@@ -490,14 +532,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a9a2e21747a7f0f479534e787fda802a
-      internalID: -719172142
+      spriteID: 393e80601f4f39b498749b5f4f2d9000
+      internalID: -938962800
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_17
+      name: Dark_lvl0_19
       rect:
         serializedVersion: 2
         x: 576
@@ -511,14 +553,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46a8b554893856942a901d3eb4fd57ec
-      internalID: -1658233875
+      spriteID: edf2bcf0201a9f8489cc6e86d69b793a
+      internalID: -35915988
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_18
+      name: Dark_lvl0_20
       rect:
         serializedVersion: 2
         x: 256
@@ -532,14 +574,56 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6304888c9564e4d4f9229f987ea60cf7
-      internalID: -1927715405
+      spriteID: 5c7a5afc23099c24ab96dd70fb85c691
+      internalID: -815405104
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_19
+      name: Dark_lvl0_21
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d34665624044434ab656c4b3ae5b399
+      internalID: 1262112912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark_lvl0_22
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df59fe922b42a184485861da2ecb2fdf
+      internalID: 1639921435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dark_lvl0_23
       rect:
         serializedVersion: 2
         x: 0
@@ -553,14 +637,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b2e14bf72f1cd645ac3c7c3bb49e362
-      internalID: -835339414
+      spriteID: c8635b685a3293c4c800f9120aa865e0
+      internalID: 1682245344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_20
+      name: Dark_lvl0_24
       rect:
         serializedVersion: 2
         x: 64
@@ -574,14 +658,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 700766144db990c47b47216e3efa325d
-      internalID: -93502073
+      spriteID: 22a9849ad40c6dc43b05219f7531323a
+      internalID: 2088979634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_21
+      name: Dark_lvl0_25
       rect:
         serializedVersion: 2
         x: 128
@@ -595,14 +679,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abd32fee0ca0cde4f9561ad8adad4214
-      internalID: -854947893
+      spriteID: f0bd61cdc0cab434283b6a052713522c
+      internalID: 1349895679
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dark_lvl4_22
+      name: Dark_lvl0_26
       rect:
         serializedVersion: 2
         x: 384
@@ -616,8 +700,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08eed2c95b52bc34e8817083fda7be1d
-      internalID: -1150406164
+      spriteID: d138c3776ff66464f834a5a1b78c30a3
+      internalID: -462040025
       vertices: []
       indices: 
       edges: []
@@ -625,7 +709,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: fcd5249b73deec242a680df7737c0d78
+    spriteID: d02e09e45861cb24bb2de0d2a2d65137
     internalID: 0
     vertices: []
     indices: 
@@ -633,29 +717,33 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dark_lvl4_15: 20198092
-      Dark_lvl4_7: 855318582
-      Dark_lvl4_13: 1189812772
-      Dark_lvl4_16: -719172142
-      Dark_lvl4_3: 432428585
-      Dark_lvl4_5: -1089739453
-      Dark_lvl4_17: -1658233875
-      Dark_lvl4_6: 1231464917
-      Dark_lvl4_10: -732411859
-      Dark_lvl4_19: -835339414
-      Dark_lvl4_20: -93502073
-      Dark_lvl4_22: -1150406164
-      Dark_lvl4_14: 942365477
-      Dark_lvl4_8: 1250655663
-      Dark_lvl4_9: -1787640833
-      Dark_lvl4_0: 1559107586
-      Dark_lvl4_12: 835883142
-      Dark_lvl4_2: 923428240
-      Dark_lvl4_4: -1428852005
-      Dark_lvl4_1: -1780840553
-      Dark_lvl4_11: 437120476
-      Dark_lvl4_18: -1927715405
-      Dark_lvl4_21: -854947893
+      Dark_lvl0_20: -815405104
+      Dark_lvl0_3: -40079283
+      Dark_lvl0_16: -1175660752
+      Dark_lvl0_13: 820005648
+      Dark_lvl0_6: 2060497759
+      Dark_lvl0_1: -1748013801
+      Dark_lvl0_24: 2088979634
+      Dark_lvl0_21: 1262112912
+      Dark_lvl0_7: -1730794617
+      Dark_lvl0_17: -1424323349
+      Dark_lvl0_26: -462040025
+      Dark_lvl0_8: 2007660728
+      Dark_lvl0_9: -1767363723
+      Dark_lvl0_4: 989626352
+      Dark_lvl0_18: -938962800
+      Dark_lvl0_15: -911421570
+      Dark_lvl0_19: -35915988
+      Dark_lvl0_2: 1303668123
+      Dark_lvl0_22: 1639921435
+      Dark_lvl0_0: -318575033
+      Dark_lvl0_14: -1104626653
+      Dark_lvl0_23: 1682245344
+      Dark_lvl0_5: -537664104
+      Dark_lvl0_12: -1282648841
+      Dark_lvl0_11: -1259548383
+      Dark_lvl0_10: -390530292
+      Dark_lvl0_25: 1349895679
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
