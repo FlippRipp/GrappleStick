@@ -11,11 +11,13 @@ public class PlayerInput : MonoBehaviour
 
     public bool leftMouseButtonPressedDown = false;
     public bool rightMouseButtonPressedDown = false;
+    public float vertical;
 
     // Update is called once per frame
     void Update()
     {
         leftMouseButtonPressedDown = Input.GetButtonDown("Fire1");
         rightMouseButtonPressedDown = Input.GetButtonDown("Fire2");
+        vertical = Input.GetAxis("Vertical");
     }
 }

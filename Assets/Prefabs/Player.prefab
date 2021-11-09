@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3178264712269362948}
   - component: {fileID: 2313115169669167046}
   - component: {fileID: 8191265876555862455}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &2313115169669167046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftMouseButtonPressedDown: 0
   rightMouseButtonPressedDown: 0
+  vertical: 0
 --- !u!114 &8191265876555862455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc902a6c4cbb2cb4cb75a7ebc34df1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grappleHookPrefab: {fileID: 0}
+  grappleHookPrefab: {fileID: 559888104337949728, guid: fbe15303108b2c346bba9fc41d48566e, type: 3}
   grappleHookSpeed: 10
-  grappleJointPrefab: {fileID: 0}
+  grappleJointPrefab: {fileID: 8692601505666270252, guid: f8db8866da690c34a993600ac35e0a05, type: 3}

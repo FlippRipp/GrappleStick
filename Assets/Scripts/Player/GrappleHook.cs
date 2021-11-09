@@ -24,6 +24,7 @@ public class GrappleHook : MonoBehaviour
 
     public void InitGrapple(Vector2 moveDir, float speed, PlayerMovement playerM)
     {
+        rigidBody.bodyType = RigidbodyType2D.Dynamic;
         hasHitSurface = false;
         grappleSpeed = speed;
         movementDirection = moveDir;

@@ -22,9 +22,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidBody;
 
     [SerializeField]
-    private HingeJoint2D grappleJointPrefab;
+    private GameObject grappleJointPrefab;
 
-    private HingeJoint2D grappleJoint;
+    private GrappleJoint grappleJoint;
 
     private List<Vector2> grappleRopePoint = new List<Vector2>();
     
@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GrapplingHockInput();
+        GrappleMovement();
     }
 
     /// <summary>
@@ -53,24 +54,40 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void GrappleMovement()
+    {
+        if (!isGrappling) return;
+
+        grappleJoint.ChangeDistance(playerInput.vertical * Time.deltaTime);
+        
+        
+    }
+
     private void GrappleFire()
     {
-        if(isGrappling) return;
-        isGrappling = true;
+        if (isGrappling)
+        {
+            grappleJoint.ClearAttachment();
+            grappleRopePoint.Clear();
+            isGrappling = false;
+        }
         Vector2 mousePosition = Vector2.zero;
             
         if (Camera.main) mousePosition = Camera.main.ScreenToWorldPoint(
-             new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+             new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
             
         Vector2 moveDirection = (mousePosition - (Vector2)transform.position).normalized;
         
-        Debug.Log("MousePos: " + mousePosition + " Dir: " + moveDirection);
-
         if (!grappleGameObject)
         {
             grappleGameObject =
                 Instantiate(grappleHookPrefab, transform.position, Quaternion.identity).GetComponent<GrappleHook>();
         }
+        else
+        {
+            grappleGameObject.transform.position = transform.position;
+        }
+        
         
         grappleGameObject.InitGrapple(moveDirection, grappleHookSpeed, this);
 
@@ -78,19 +95,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnGrappleHit(Vector2 hitPoint)
     {
+        isGrappling = true;
         grappleRopePoint.Add(hitPoint);
 
         if (!grappleJoint)
         {
             grappleJoint = Instantiate(grappleJointPrefab, hitPoint, quaternion.identity)
-                .GetComponent<HingeJoint2D>();
+                .GetComponent<GrappleJoint>();
         }
         else
         {
             grappleJoint.transform.position = hitPoint;
         }
 
-        grappleJoint.connectedBody = rigidBody;
+        grappleJoint.SetUpAttachment(rigidBody);
 
     }
 }
