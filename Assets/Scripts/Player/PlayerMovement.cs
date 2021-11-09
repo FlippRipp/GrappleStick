@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGrappling) return;
 
+        //transform.up = Vector3.Lerp(transform.up, (grappleJoint.transform.position - transform.position).normalized, 0.1f);
         grappleJoint.ChangeDistance(playerInput.vertical * grappleReelSpeed * Time.deltaTime);
         
         
