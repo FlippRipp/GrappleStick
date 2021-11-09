@@ -13,7 +13,11 @@ public class PlayerMovement : MonoBehaviour
     private GameObject grappleHookPrefab;
 
     [SerializeField, Range(0, 50)]
-    private float grappleHookSpeed = 10;
+    private float grappleHookProjectileSpeed = 10;
+    [SerializeField, Range(0, 50)]
+    private float grappleReelSpeed = 2;
+    
+    
 
     private bool isGrappling = false;
 
@@ -58,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGrappling) return;
 
-        grappleJoint.ChangeDistance(playerInput.vertical * Time.deltaTime);
+        grappleJoint.ChangeDistance(playerInput.vertical * grappleReelSpeed * Time.deltaTime);
         
         
     }
@@ -89,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         
-        grappleGameObject.InitGrapple(moveDirection, grappleHookSpeed, this);
+        grappleGameObject.InitGrapple(moveDirection, grappleHookProjectileSpeed, this);
 
     }
 
