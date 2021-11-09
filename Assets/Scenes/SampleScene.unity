@@ -2667,10 +2667,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3178264712269362948, guid: 2e2db8ad315fb9d4ab8dd8b844633221, type: 3}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3178264712269362951, guid: 2e2db8ad315fb9d4ab8dd8b844633221, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2718,10 +2714,6 @@ PrefabInstance:
     - target: {fileID: 3178264712269362955, guid: 2e2db8ad315fb9d4ab8dd8b844633221, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8191265876555862455, guid: 2e2db8ad315fb9d4ab8dd8b844633221, type: 3}
-      propertyPath: grappleReelSpeed
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e2db8ad315fb9d4ab8dd8b844633221, type: 3}
