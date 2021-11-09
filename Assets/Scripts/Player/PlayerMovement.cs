@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrappling = false;
 
-    private GrappleHook grappleGameObject;
+    private GrappleHook grappleHook;
 
     private Rigidbody2D rigidBody;
 
@@ -31,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private GrappleJoint grappleJoint;
 
     private List<Vector2> grappleRopePoint = new List<Vector2>();
+
+    private Vector2 reelForce;
     
     // Start is called before the first frame update
     void Awake()
@@ -56,6 +58,12 @@ public class PlayerMovement : MonoBehaviour
         {
             GrappleFire();
         }
+
+        if (playerInput.rightMouseButtonPressedUp)
+        {
+            GrappleRetract();
+        }
+        
     }
 
     private void GrappleMovement()
@@ -64,18 +72,20 @@ public class PlayerMovement : MonoBehaviour
 
         //transform.up = Vector3.Lerp(transform.up, (grappleJoint.transform.position - transform.position).normalized, 0.1f);
         grappleJoint.ChangeDistance(playerInput.vertical * grappleReelSpeed * Time.deltaTime);
-        
-        
+
+        reelForce = grappleReelSpeed * playerInput.vertical
+                                     * (grappleJoint.transform.position - transform.position).normalized;
+
+
     }
 
     private void GrappleFire()
     {
         if (isGrappling)
         {
-            grappleJoint.ClearAttachment();
-            grappleRopePoint.Clear();
-            isGrappling = false;
+            GrappleRetract();
         }
+        
         Vector2 mousePosition = Vector2.zero;
             
         if (Camera.main) mousePosition = Camera.main.ScreenToWorldPoint(
@@ -83,19 +93,32 @@ public class PlayerMovement : MonoBehaviour
             
         Vector2 moveDirection = (mousePosition - (Vector2)transform.position).normalized;
         
-        if (!grappleGameObject)
+        if (!grappleHook)
         {
-            grappleGameObject =
+            grappleHook =
                 Instantiate(grappleHookPrefab, transform.position, Quaternion.identity).GetComponent<GrappleHook>();
         }
         else
         {
-            grappleGameObject.transform.position = transform.position;
+            grappleHook.transform.position = transform.position;
         }
         
         
-        grappleGameObject.InitGrapple(moveDirection, grappleHookProjectileSpeed, this);
+        grappleHook.InitGrapple(moveDirection, grappleHookProjectileSpeed, this);
 
+    }
+
+    private void GrappleRetract()
+    {
+        if (isGrappling)
+        {
+            rigidBody.velocity += reelForce;
+            reelForce = Vector2.zero;
+            grappleJoint.ClearAttachment();
+            grappleRopePoint.Clear();
+            isGrappling = false;
+        }
+        grappleHook.gameObject.SetActive(false);
     }
 
     public void OnGrappleHit(Vector2 hitPoint)

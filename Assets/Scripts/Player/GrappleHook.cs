@@ -6,8 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class GrappleHook : MonoBehaviour
 {
-    private float grappleSpeed = 0;
-    private Vector2 movementDirection;
 
     [SerializeField]
     private LayerMask grappleLayers;
@@ -27,10 +25,8 @@ public class GrappleHook : MonoBehaviour
         gameObject.SetActive(true);
         rigidBody.bodyType = RigidbodyType2D.Dynamic;
         hasHitSurface = false;
-        grappleSpeed = speed;
-        movementDirection = moveDir;
         playerMovement = playerM;
-        rigidBody.velocity = moveDir * grappleSpeed;
+        rigidBody.velocity = moveDir * speed;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
