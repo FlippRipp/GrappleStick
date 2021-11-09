@@ -294,7 +294,7 @@ MonoBehaviour:
   legRetractSpeed: 2
   legCollisionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 257
 --- !u!60 &2512170266723446270
 PolygonCollider2D:
   m_ObjectHideFlags: 0
