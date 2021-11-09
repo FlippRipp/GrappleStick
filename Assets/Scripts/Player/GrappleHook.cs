@@ -24,6 +24,7 @@ public class GrappleHook : MonoBehaviour
 
     public void InitGrapple(Vector2 moveDir, float speed, PlayerMovement playerM)
     {
+        gameObject.SetActive(true);
         rigidBody.bodyType = RigidbodyType2D.Dynamic;
         hasHitSurface = false;
         grappleSpeed = speed;
@@ -43,6 +44,10 @@ public class GrappleHook : MonoBehaviour
             
             playerMovement.OnGrappleHit(other.GetContact(0).point);
             
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 }

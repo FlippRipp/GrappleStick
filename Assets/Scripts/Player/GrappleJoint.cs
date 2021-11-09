@@ -24,7 +24,6 @@ public class GrappleJoint : MonoBehaviour
         grappleDistanceJoint.distance -= distanceDelta;
         
         grappleDistanceJoint.distance = Mathf.Max(grappleDistanceJoint.distance, 1);
-        
     }
 
     public void SetDistance(float distance)
