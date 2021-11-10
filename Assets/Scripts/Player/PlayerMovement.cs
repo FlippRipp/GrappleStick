@@ -212,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void GrappleRetract()
+    public void GrappleRetract()
     {
         if (isGrappling)
         {
@@ -242,6 +242,14 @@ public class PlayerMovement : MonoBehaviour
 
         grappleJoint.SetUpAttachment(rigidBody);
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.GetComponent<MovingArrow>())
+        {
+            GrappleRetract();
+        }
     }
 }
 
