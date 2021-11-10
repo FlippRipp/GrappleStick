@@ -8,7 +8,7 @@ public class GrappleHook : MonoBehaviour
 {
 
     [SerializeField]
-    private LayerMask grappleLayers;
+    public LayerMask grappleLayers;
 
     private Rigidbody2D rigidBody;
     private PlayerMovement playerMovement;
