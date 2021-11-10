@@ -51,6 +51,7 @@ public class LegController : MonoBehaviour
     {
         UpdateLegDirection();
         legRenderer.SetPosition(0, transform.position);
+        legRenderer.SetPosition(1, transform.position);
         
         if (isExtending)
         {
