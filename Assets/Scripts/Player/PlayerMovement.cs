@@ -35,13 +35,21 @@ public partial class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float legMaxLenght = 2;
     [SerializeField]
-    private float legJumpForce = 1;
+    private float legMinLenght = 2;
+    [SerializeField]
+    private float legForce = 1;
+
+    [SerializeField]
+    private float legChargeMaxTime = 3;
     [SerializeField]
     private float legExtendSpeed = 2;
     [SerializeField]
     private float legRetractSpeed = 2;
     [SerializeField]
     private LayerMask legCollisionMask;
+
+    private bool legCharging;
+    private float legChargeTime;
 
     private Vector2 legDirection;
     
@@ -58,7 +66,7 @@ public partial class PlayerMovement : MonoBehaviour
     {
         GrapplingHockInputs();
         GrappleMovement();
-        LegInputs();
+        LegUpdate();
     }
 
     /// <summary>
@@ -89,36 +97,45 @@ public partial class PlayerMovement : MonoBehaviour
         //legController.UpdateLegDirection(legDirection);
     }
 
-    private void LegInputs()
+    private void LegUpdate()
     {
+        if (legCharging)
+        {
+            legChargeTime += Time.deltaTime;
+            legChargeTime = Mathf.Min(legChargeTime, legChargeMaxTime);
+        }
+        
         if (playerInput.leftMouseButtonPressedDown)
         {
-            ExtendLeg();
+            legCharging = true;
         }
 
         if (playerInput.leftMouseButtonPressedUp)
         {
-            legController.RetractLeg(legRetractSpeed);
+            ExtendLeg();
+            //legController.RetractLeg(legRetractSpeed);
+            legCharging = false;
+            legChargeTime = 0;
         }
     }
 
     private void ExtendLeg()
     {
         LegRotation();
-        RaycastHit2D hit2D
-            = Physics2D.Raycast(transform.position, legDirection, legMaxLenght, legCollisionMask);
+        float distance = Mathf.Max(legMinLenght, legMaxLenght * (legChargeTime / legChargeMaxTime));
 
-        float distance = legMaxLenght;
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, legDirection,
+                legMaxLenght * (legChargeTime / legChargeMaxTime), legCollisionMask);
+
         if (hit2D.collider)
         {
             distance = hit2D.distance;
-            rigidBody.AddForce(-legDirection * legJumpForce, ForceMode2D.Impulse);
+            rigidBody.AddForce(-legDirection * (legForce * (legChargeTime / legChargeMaxTime)), ForceMode2D.Impulse);
         }
 
         distance = Mathf.Min(distance, legMaxLenght);
-        legController.ExtendLeg(distance, legExtendSpeed / distance, legDirection);
-
-
+        legController.ExtendLeg(distance, legExtendSpeed / distance * (legChargeTime / legChargeMaxTime),
+            legDirection);
     }
 
     private void GrappleMovement()
@@ -127,7 +144,6 @@ public partial class PlayerMovement : MonoBehaviour
 
         RopeCut();
 
-        //transform.up = Vector3.Lerp(transform.up, (grappleJoint.transform.position - transform.position).normalized, 0.1f);
         grappleJoint.ChangeDistance(playerInput.vertical * grappleReelSpeed * Time.deltaTime);
 
         reelForce = grappleReelSpeed * playerInput.vertical

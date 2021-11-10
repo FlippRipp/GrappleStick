@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class LegController : MonoBehaviour
 {
+    [SerializeField]
+    private Transform foot;
+    
     private float legExtendedLenght;
     private float extendSpeed;
     private float retractSpeed;
 
     private float legExtendAmount = 0;
+    private LineRenderer legRenderer;
+
 
     private Vector2 legDirection;
 
     private bool isExtending;
     private bool isRetracting;
-    
+
+    private void Start()
+    {
+        legRenderer = GetComponent<LineRenderer>();
+    }
+
     public void ExtendLeg(float length, float speed, Vector2 direction)
     {
         legDirection = direction;
@@ -30,7 +40,6 @@ public class LegController : MonoBehaviour
         retractSpeed = speed;
         isExtending = false;
         isRetracting = true;
-
     }
 
     public void UpdateLegDirection()
@@ -41,21 +50,34 @@ public class LegController : MonoBehaviour
     private void Update()
     {
         UpdateLegDirection();
+        legRenderer.SetPosition(0, transform.position);
+        
         if (isExtending)
         {
             float lenght = Mathf.Lerp(0, legExtendedLenght, legExtendAmount);
-            
-            transform.localScale = new Vector3(lenght, transform.localScale.y, transform.localScale.z);
-            legExtendAmount += extendSpeed * Time.deltaTime;
-            
-            if (legExtendAmount >= 1) isExtending = false;
-        }
 
+            
+            legExtendAmount += extendSpeed * Time.deltaTime;
+
+            Vector3 legPos = transform.position + (Vector3) legDirection * lenght;
+            foot.position = legPos;
+            legRenderer.SetPosition(1, legPos);
+            if (legExtendAmount >= 1)
+            {
+                isExtending = false;
+                isRetracting = true;
+
+            }
+        }
+        
         if (isRetracting)
         {
             float lenght = Mathf.Lerp(0, legExtendedLenght, legExtendAmount);
-            transform.localScale = new Vector3(lenght, transform.localScale.y, transform.localScale.z);
-            legExtendAmount -= retractSpeed * Time.deltaTime;
+            legExtendAmount -= extendSpeed * Time.deltaTime;
+            
+            Vector3 legPos = transform.position + (Vector3) legDirection * lenght;
+            foot.position = legPos;
+            legRenderer.SetPosition(1, legPos);
             if (legExtendAmount <= 0) isExtending = false;
         }
     }
