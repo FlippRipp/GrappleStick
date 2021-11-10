@@ -18,4 +18,10 @@ public class MovingArrow : MonoBehaviour
     {
         rigidbody.velocity = moveDelta;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
+    }
 }
+

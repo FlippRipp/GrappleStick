@@ -49,7 +49,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 2975075449604087990}
   spawnedObjects: []
-  prefabToSpawn: {fileID: 0}
+  prefabToSpawn: {fileID: 8082572584791027205, guid: d291c9d2ccb943b4bbeb5ca3e3d63979, type: 3}
 --- !u!1 &2975075449604087991
 GameObject:
   m_ObjectHideFlags: 0
