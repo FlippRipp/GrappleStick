@@ -7,6 +7,7 @@ public class MovingArrow : MonoBehaviour
     [SerializeField]
     private Vector2 moveDelta;
     private Rigidbody2D rigidbody;
+    public LayerMask grappleLayers;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,11 @@ public class MovingArrow : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        if (grappleLayers == (grappleLayers | (1 << collision.gameObject.layer)))
+        {
         Destroy(gameObject);
+        }
     }
 }
 
