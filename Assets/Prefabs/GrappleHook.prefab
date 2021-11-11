@@ -139,3 +139,5 @@ MonoBehaviour:
   grappleLayers:
     serializedVersion: 2
     m_Bits: 256
+  ropePrefab: {fileID: 5323895233354118860, guid: 6d97f4d471d359d4785b93f67d9fe16c, type: 3}
+  hasHitSurface: 0
