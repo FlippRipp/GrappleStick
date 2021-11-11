@@ -47,16 +47,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5ea6a976258ae49a40f63c0987e7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shouldRotate: 1
-  shouldMove: 1
-  rotateSpeed: 30
+  shouldRotate: 0
+  shouldMove: 0
+  rotateSpeed: 10
   DirectionToRotate: 0
-  useMaxRotation: 1
-  maxLeftRotation: 90
-  maxRightRotation: 90
+  useMaxRotation: 0
+  maxLeftRotation: 0
+  maxRightRotation: 0
   waitTimeLeft: 2
   waitTimeRight: 0
-  movementSpeed: 2
+  movementSpeed: 1
   Waypoints: []
   WaypointMovementType: 1
 --- !u!50 &24894200414620392
