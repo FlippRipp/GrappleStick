@@ -18,14 +18,27 @@ public class GrapplePhysics : MonoBehaviour
 
     Vector3 moveDir;
 
+    private bool inited = false;
+
+    void Init()
+    {
+        if (!inited)
+        {
+            inited = true;
+
+            rigidBody = GetComponent<Rigidbody2D>();
+            rigidBody.gravityScale = 0;
+
+            SpawnChainLinks();
+
+            transform.DetachChildren();
+        }
+
+    }
+
     private void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
-        rigidBody.gravityScale = 0;
 
-        SpawnChainLinks();
-
-        transform.DetachChildren();
     }
 
     private void FixedUpdate()
@@ -57,6 +70,8 @@ public class GrapplePhysics : MonoBehaviour
 
     private void OnEnable()
     {
+        Init();
+
         foreach (GameObject obj in objs)
         {
             if (obj != gameObject)
@@ -105,7 +120,7 @@ public class GrapplePhysics : MonoBehaviour
             playerHingeJoint.connectedBody = objs[objs.Length - 1].GetComponent<Rigidbody2D>();
 
             foreach (GameObject obj in objs)
-            obj.GetComponent<Rigidbody2D>().velocity = playerHingeJoint.GetComponent<Rigidbody2D>().velocity;
+            obj.GetComponent<Rigidbody2D>().velocity = moveDir * 5;
         }
     }
 
