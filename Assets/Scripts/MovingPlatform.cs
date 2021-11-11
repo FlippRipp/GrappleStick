@@ -71,6 +71,10 @@ public class MovingPlatform : MonoBehaviour
         {
             Move();
         }
+        else
+        {
+            rb.velocity = new Vector2(0f, 0f);
+        }
     }
 
     void Move()

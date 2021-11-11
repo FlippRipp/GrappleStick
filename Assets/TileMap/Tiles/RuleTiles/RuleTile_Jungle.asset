@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: RuleTile_Jungle
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -255447934, guid: 45ce6ca6079cb934aaba9d047bcc5aa2, type: 3}
+  m_DefaultSprite: {fileID: -1278617395, guid: 45ce6ca6079cb934aaba9d047bcc5aa2, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
@@ -147,7 +147,7 @@ MonoBehaviour:
     m_RuleTransform: 4
   - m_Id: 15
     m_Sprites:
-    - {fileID: 353762137, guid: 45ce6ca6079cb934aaba9d047bcc5aa2, type: 3}
+    - {fileID: -1535322160, guid: 45ce6ca6079cb934aaba9d047bcc5aa2, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
@@ -164,7 +164,7 @@ MonoBehaviour:
     m_RuleTransform: 4
   - m_Id: 16
     m_Sprites:
-    - {fileID: -193759392, guid: 45ce6ca6079cb934aaba9d047bcc5aa2, type: 3}
+    - {fileID: 32006679, guid: 45ce6ca6079cb934aaba9d047bcc5aa2, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
