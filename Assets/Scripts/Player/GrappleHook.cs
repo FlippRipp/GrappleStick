@@ -10,10 +10,14 @@ public class GrappleHook : MonoBehaviour
     [SerializeField]
     public LayerMask grappleLayers;
 
+    [SerializeField]
+    private GrappleRope ropePrefab;
+
     private Rigidbody2D rigidBody;
     private PlayerMovement playerMovement;
+    private GrappleRope grappleRope;
 
-    private bool hasHitSurface;
+    public bool hasHitSurface;
 
     private void Awake()
     {
@@ -27,6 +31,13 @@ public class GrappleHook : MonoBehaviour
         hasHitSurface = false;
         playerMovement = playerM;
         rigidBody.velocity = moveDir * speed;
+
+        if (!grappleRope)
+        {
+            grappleRope = Instantiate(ropePrefab, transform.position, transform.rotation);
+            grappleRope.player = playerMovement;
+            grappleRope.grappleHook = gameObject;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
