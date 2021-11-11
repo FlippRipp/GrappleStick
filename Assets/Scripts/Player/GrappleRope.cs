@@ -17,7 +17,7 @@ public class GrappleRope : MonoBehaviour
 
     private bool distanceSet = false;
 
-    private float minDistance = 0.5f;
+    private float minDistance = .25f;
 
     private Dictionary<Vector2, int> wrapPointsLookup = new Dictionary<Vector2, int>();
 
@@ -25,8 +25,9 @@ public class GrappleRope : MonoBehaviour
 
     private Vector2[] vertexCache = new Vector2[128];
 
-    private Vector2 anchorPos;
+    private Vector2 colPathCenter;
 
+    private Vector2 anchorPos;
     public Vector2 AnchorPosition => anchorPos;
 
     void Start()
@@ -67,9 +68,10 @@ public class GrappleRope : MonoBehaviour
                     GameObject newObject = new GameObject("Node", typeof(Node));
                     newObject.transform.position = closestPoint;
 
-                    Vector2 colPathCenter = GetPathCenter(hit.collider as CompositeCollider2D, path);
+                    colPathCenter = GetPathCenter(hit.collider as CompositeCollider2D, path);
 
                     newObject.GetComponent<Node>().normalDirection = (closestPoint - colPathCenter).normalized;
+                    //newObject.GetComponent<Node>().normalDirection = hit.normal;
 
                     RopeNode newClosest = new RopeNode(newObject.transform, closestAtBeginning.destinationTrans);
                     ropeNodes.Add(newClosest);
@@ -84,7 +86,7 @@ public class GrappleRope : MonoBehaviour
         }
 
         // Angle checking
-        if (ropeNodes.Count + 1 >= 3 && lastNode)
+        if (ropeNodes.Count >= 2 && lastNode)
         {
             Vector3 playerPos = player.transform.position;
 
@@ -101,18 +103,12 @@ public class GrappleRope : MonoBehaviour
             if (Vector3.Dot(lhs, lastNode.GetComponent<Node>().normalDirection) < 0)
                 lhs *= -1f;
 
-            //Debug.DrawRay(position4, vector3 * 5f, Color.red);
-            //Debug.DrawRay(position4, -vector3 * 5f, Color.green);
-            //Debug.DrawRay(position4, lhs * 5f, Color.blue);
-            //Debug.DrawRay(transform.position, rhs * 5f, Color.magenta);
-
             print(Vector3.Dot(lhs, rhs));
 
-            if (Vector3.Dot(lhs, rhs) <= 0)
+            if (Vector3.Dot(lhs, rhs) < 0)
             {
                 return;
             }
-                
         }
         
         if (ropeNodes.Count < 2)
@@ -174,6 +170,9 @@ public class GrappleRope : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(anchorPos, 0.1f);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(colPathCenter, 0.1f);
     }
 
     private Vector2 GetNearestVertex(RaycastHit2D hit, out int path)

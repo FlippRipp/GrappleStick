@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5917413130984001612}
   - component: {fileID: 8964693711085874949}
   - component: {fileID: 5563823711896035114}
+  - component: {fileID: 1114397115494452472}
   m_Layer: 6
   m_Name: GrappleHook
   m_TagString: Untagged
@@ -139,5 +140,19 @@ MonoBehaviour:
   grappleLayers:
     serializedVersion: 2
     m_Bits: 256
-  ropePrefab: {fileID: 5323895233354118860, guid: 6d97f4d471d359d4785b93f67d9fe16c, type: 3}
+  ropePrefab: {fileID: 0}
   hasHitSurface: 0
+--- !u!114 &1114397115494452472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559888104337949728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2aae1fc89d1c404c9074d664245ef79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainLinkPrefab: {fileID: 6381383999729442739, guid: c4f04c8f9a83b2344907a6ff4869756c, type: 3}
+  linkCount: 30

@@ -100,13 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2aae1fc89d1c404c9074d664245ef79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grappleLayers:
-    serializedVersion: 2
-    m_Bits: 256
-  grapplingHookRopeLength: 10
-  ropeJointCount: 10
-  grappleSpeed: 10
-  chainLinkPrefab: {fileID: 6381383999729442737, guid: c4f04c8f9a83b2344907a6ff4869756c, type: 3}
+  chainLinkPrefab: {fileID: 6381383999729442739, guid: c4f04c8f9a83b2344907a6ff4869756c, type: 3}
+  linkCount: 10
 --- !u!58 &3214955196681538748
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -131,7 +126,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3214955196681538736}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 
 public partial class PlayerMovement : MonoBehaviour
 {
@@ -48,6 +49,14 @@ public partial class PlayerMovement : MonoBehaviour
     [SerializeField]
     private LayerMask legCollisionMask;
 
+    [SerializeField] private UnityEvent<float> onFootCharge;
+
+    [SerializeField] private float legMinShakeMagnitude = 0f;
+    [SerializeField] private float legMaxShakeMagnitude = 0.2f;
+    [SerializeField] private float legMinShakeFrequency = 0.3f;
+    [SerializeField] private float legMaxShakeFrequency = 0.3f;
+    
+
     private bool legCharging;
     private float legChargeTime;
 
@@ -92,26 +101,43 @@ public partial class PlayerMovement : MonoBehaviour
         if (Camera.main) mousePosition = Camera.main.ScreenToWorldPoint(
             new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
             
-        legDirection = (mousePosition - (Vector2)transform.position).normalized;
-        
-        //legController.UpdateLegDirection(legDirection);
+        legDirection = -(mousePosition - (Vector2)transform.position).normalized;
     }
 
     private void LegUpdate()
     {
+
         if (legCharging)
         {
+            onFootCharge.Invoke(legChargeTime / legChargeMaxTime);
+            legController.ChangeLegShakeFrequency(Mathf.Lerp(legMinShakeFrequency, legMaxShakeFrequency,
+                legChargeTime / legChargeMaxTime));
+            
+            legController.ChangeLegShakeMagnitude(Mathf.Lerp(legMinShakeMagnitude, legMaxShakeMagnitude,
+                legChargeTime / legChargeMaxTime));
+            
             legChargeTime += Time.deltaTime;
             legChargeTime = Mathf.Min(legChargeTime, legChargeMaxTime);
+        }
+        else
+        {
+            LegRotation();
+            legController.SetLegDirection(legDirection);
+
         }
         
         if (playerInput.leftMouseButtonPressedDown)
         {
+            LegRotation();
+            legController.SetLegDirection(legDirection);
+            legController.StartLegShake(0, legMinShakeFrequency);
             legCharging = true;
         }
 
         if (playerInput.leftMouseButtonPressedUp)
         {
+            onFootCharge.Invoke(0);
+            legController.EndLegShake();
             ExtendLeg();
             //legController.RetractLeg(legRetractSpeed);
             legCharging = false;
@@ -121,7 +147,7 @@ public partial class PlayerMovement : MonoBehaviour
 
     private void ExtendLeg()
     {
-        LegRotation();
+        //LegRotation();
         float distance = Mathf.Max(legMinLenght, legMaxLenght * (legChargeTime / legChargeMaxTime));
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, legDirection,
