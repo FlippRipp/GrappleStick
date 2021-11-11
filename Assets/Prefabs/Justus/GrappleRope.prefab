@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5497505824360894882}
   - component: {fileID: 5323895233354118860}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GrappleRope
   m_TagString: Untagged
   m_Icon: {fileID: 0}

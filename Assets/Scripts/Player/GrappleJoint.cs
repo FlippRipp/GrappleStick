@@ -8,8 +8,6 @@ public class GrappleJoint : MonoBehaviour
     private DistanceJoint2D grappleDistanceJoint;
     [SerializeField]
     private HingeJoint2D grappleHingeJoint;
-    
-    
 
     public void ChangeDistance(float distanceDelta)
     {

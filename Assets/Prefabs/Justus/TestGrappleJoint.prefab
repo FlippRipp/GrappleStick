@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6381383999729442742}
   - component: {fileID: 6381383999729442737}
   - component: {fileID: 6381383999729442740}
-  - component: {fileID: 5105888384774938599}
+  - component: {fileID: 1129126144664834903}
   m_Layer: 0
   m_Name: TestGrappleJoint
   m_TagString: Untagged
@@ -135,7 +135,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -169,8 +169,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
---- !u!233 &5105888384774938599
+  m_Radius: 0.1
+--- !u!233 &1129126144664834903
 HingeJoint2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,13 +179,13 @@ HingeJoint2D:
   m_GameObject: {fileID: 6381383999729442739}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
+  m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: -1.5917256, y: 2.62}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
