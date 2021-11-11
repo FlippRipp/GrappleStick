@@ -289,8 +289,10 @@ MonoBehaviour:
   grappleJointPrefab: {fileID: 8692601505666270252, guid: f8db8866da690c34a993600ac35e0a05, type: 3}
   legController: {fileID: 4357902541671642353}
   legMaxLenght: 2
-  legJumpForce: 1
-  legExtendSpeed: 2
+  legMinLenght: 0.7
+  legForce: 4
+  legChargeMaxTime: 1
+  legExtendSpeed: 10
   legRetractSpeed: 2
   legCollisionMask:
     serializedVersion: 2
@@ -357,7 +359,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.0050001144, y: -0.062000036}
+  m_ConnectedAnchor: {x: 0.0050001144, y: -0.061999798}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
