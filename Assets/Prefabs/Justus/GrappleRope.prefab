@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   grappleHook: {fileID: 0}
-  maxLength: 5
-  ropeMinDistance: 0.5
-  ropeMaxDistance: 1
+  touchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  ropeNodes: []
