@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2909132746989258570}
   - component: {fileID: 2909132746989258571}
   m_Layer: 8
-  m_Name: s_Seesaw
+  m_Name: Seesaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
