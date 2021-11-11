@@ -32,7 +32,7 @@ public class GrappleHook : MonoBehaviour
         playerMovement = playerM;
         rigidBody.velocity = moveDir * speed;
 
-        if (!grappleRope)
+        if (!grappleRope && ropePrefab)
         {
             grappleRope = Instantiate(ropePrefab, transform.position, transform.rotation);
             grappleRope.player = playerMovement;
