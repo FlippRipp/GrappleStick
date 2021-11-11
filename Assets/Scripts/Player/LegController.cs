@@ -95,6 +95,7 @@ public class LegController : MonoBehaviour
 
     public void SetLegDirection(Vector2 direction)
     {
+        if(isExtending || isRetracting) return;
         legDirection = direction;
     }
 
@@ -133,7 +134,7 @@ public class LegController : MonoBehaviour
             Vector3 legPos = transform.position + (Vector3) legDirection * lenght;
             foot.position = legPos + (Vector3)shakeOffset;
             legRenderer.SetPosition(1, legPos);
-            if (legExtendAmount <= 0) isExtending = false;
+            if (legExtendAmount <= 0) isRetracting = false;
         }
     }
 }
