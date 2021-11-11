@@ -33,10 +33,12 @@ public class MovingPlatform : MonoBehaviour
     float timeToMove;
     bool BounceSwitch;
     int currentWaypointIndex;
+    Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = gameObject.GetComponent<Rigidbody2D>();
         SetTargetRotation(DirectionToRotate);
         currentRotationDirection = DirectionToRotate;
         if (!(Waypoints?.Length != 0))
@@ -73,7 +75,10 @@ public class MovingPlatform : MonoBehaviour
 
     void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, movementSpeed * Time.deltaTime);
+        Vector2 currentPos = transform.position;
+        Vector2 targetPos = currentWaypoint.position;
+        Vector2 dir = (currentPos - targetPos).normalized;
+        rb.velocity = -(dir * movementSpeed);
     }
 
     void CheckDistanceToWaypoint()
