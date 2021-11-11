@@ -18,22 +18,33 @@ public class GrapplePhysics : MonoBehaviour
 
     Vector3 moveDir;
 
-    private void Awake()
+    private bool inited = false;
+
+    void Init()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
-        rigidBody.gravityScale = 0;
+        if (!inited)
+        {
+            inited = true;
 
-        SpawnChainLinks();
+            rigidBody = GetComponent<Rigidbody2D>();
+            rigidBody.gravityScale = 0;
 
-        transform.DetachChildren();
+            SpawnChainLinks();
+
+            transform.DetachChildren();
+        }
+
+    }
+
+    private void Start()
+    {
+
     }
 
     private void FixedUpdate()
     {
         //rigidBody.AddForce(Vector3.up * 10, ForceMode2D.Impulse);
         rigidBody.velocity = moveDir * 15;
-
-
     }
 
     private void SpawnChainLinks()
@@ -59,6 +70,8 @@ public class GrapplePhysics : MonoBehaviour
 
     private void OnEnable()
     {
+        Init();
+
         foreach (GameObject obj in objs)
         {
             if (obj != gameObject)
@@ -69,20 +82,21 @@ public class GrapplePhysics : MonoBehaviour
 
         foreach (GameObject obj in objs)
         {
-            Physics2D.IgnoreCollision(obj.GetComponent<Collider2D>(), pm.GetComponent<Collider2D>());
+            //Physics2D.IgnoreCollision(obj.GetComponent<Collider2D>(), pm.GetComponent<Collider2D>());
 
             if (obj.GetComponent<HingeJoint2D>())
             {
                 obj.GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = false;
             }
             
-            obj.transform.position = pm.transform.position;
+            obj.transform.position = pm.transform.position + (Vector3)pm.GetComponent<Rigidbody2D>().velocity * Time.deltaTime;
             obj.GetComponent<Rigidbody2D>().MovePosition(pm.transform.position);
             
         }
 
         for (int i = 0; i < objs.Length; i++)
         {
+            Physics2D.IgnoreCollision(objs[i].GetComponent<Collider2D>(), pm.GetComponent<Collider2D>());
             for (int j = 0; j < objs.Length; j++)
             {
                 Physics2D.IgnoreCollision(objs[i].GetComponent<Collider2D>(), objs[j].GetComponent<Collider2D>());
@@ -98,16 +112,15 @@ public class GrapplePhysics : MonoBehaviour
 
         if (!playerHingeJoint)
         {
-            //PlayerMovement pm = FindObjectOfType<PlayerMovement>();
-
             playerHingeJoint = pm.gameObject.AddComponent<HingeJoint2D>();
-
         }
 
         if (playerHingeJoint)
         {
             playerHingeJoint.connectedBody = objs[objs.Length - 1].GetComponent<Rigidbody2D>();
-            objs[objs.Length - 1].GetComponent<Rigidbody2D>().velocity = playerHingeJoint.GetComponent<Rigidbody2D>().velocity;
+
+            foreach (GameObject obj in objs)
+            obj.GetComponent<Rigidbody2D>().velocity = moveDir * 5;
         }
     }
 
