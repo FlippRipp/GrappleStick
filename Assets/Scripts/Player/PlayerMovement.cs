@@ -106,7 +106,6 @@ public partial class PlayerMovement : MonoBehaviour
 
     private void LegUpdate()
     {
-        LegRotation();
 
         if (legCharging)
         {
@@ -122,12 +121,14 @@ public partial class PlayerMovement : MonoBehaviour
         }
         else
         {
+            LegRotation();
             legController.SetLegDirection(legDirection);
 
         }
         
         if (playerInput.leftMouseButtonPressedDown)
         {
+            LegRotation();
             legController.SetLegDirection(legDirection);
             legController.StartLegShake(0, legMinShakeFrequency);
             legCharging = true;
@@ -146,7 +147,7 @@ public partial class PlayerMovement : MonoBehaviour
 
     private void ExtendLeg()
     {
-        LegRotation();
+        //LegRotation();
         float distance = Mathf.Max(legMinLenght, legMaxLenght * (legChargeTime / legChargeMaxTime));
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, legDirection,
