@@ -48,6 +48,7 @@ public class GrappleHook : MonoBehaviour
             hasHitSurface = true;
             //might not allow it to move at all?
             rigidBody.bodyType = RigidbodyType2D.Static;
+            print("oo");
             playerMovement.OnGrappleHit(other.GetContact(0).point);
 
             //transform.parent = other.transform;

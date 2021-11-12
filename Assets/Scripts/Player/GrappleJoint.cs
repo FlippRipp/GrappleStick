@@ -31,6 +31,7 @@ public class GrappleJoint : MonoBehaviour
 
     public void SetUpAttachment(Rigidbody2D rigidbodyToAttach)
     {
+        print(Vector3.Distance(rigidbodyToAttach.position, transform.position));
         SetDistance(Vector3.Distance(rigidbodyToAttach.position, transform.position));
         
         grappleDistanceJoint.connectedBody = rigidbodyToAttach;
@@ -39,5 +40,11 @@ public class GrappleJoint : MonoBehaviour
     public void ClearAttachment()
     {
         grappleDistanceJoint.connectedBody = null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(transform.position, 0.125f);
     }
 }

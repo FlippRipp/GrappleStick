@@ -23,8 +23,10 @@ public partial class PlayerMovement : MonoBehaviour
     
     private bool isGrappling = false;
     private GrappleHook grappleHook;
-    private GrappleJoint grappleJoint;
-    private List<Vector2> grappleRopePoint = new List<Vector2>();
+    [HideInInspector]
+    public GrappleJoint grappleJoint;
+    [HideInInspector]
+    public List<Vector2> grappleRopePoint = new List<Vector2>();
     
     private Vector2 reelForce;
 
@@ -179,7 +181,7 @@ public partial class PlayerMovement : MonoBehaviour
 
         if (isGrappling)
         {
-            grappleJoint.transform.position = grappleHook.transform.position;
+            //grappleJoint.transform.position = grappleHook.transform.position;
 
             //grappleJoint.transform.position = grappleHook.grappleRope.AnchorPosition;
             //grappleJoint.GetComponent<Rigidbody2D>().MovePosition(grappleHook.grappleRope.AnchorPosition);
@@ -233,15 +235,15 @@ public partial class PlayerMovement : MonoBehaviour
         isGrappling = true;
         grappleRopePoint.Add(hitPoint);
 
-        if (!grappleJoint)
+        if (grappleJoint)
         {
-            grappleJoint = Instantiate(grappleJointPrefab, hitPoint, quaternion.identity)
-                .GetComponent<GrappleJoint>();
+            grappleJoint.ClearAttachment();
+            Destroy(grappleJoint.gameObject);
         }
-        else
-        {
-            grappleJoint.transform.position = hitPoint;
-        }
+            
+
+        grappleJoint = Instantiate(grappleJointPrefab, hitPoint, quaternion.identity)
+            .GetComponent<GrappleJoint>();
 
         grappleJoint.SetUpAttachment(rigidBody);
 
