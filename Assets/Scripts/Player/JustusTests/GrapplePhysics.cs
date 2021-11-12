@@ -43,8 +43,22 @@ public class GrapplePhysics : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //rigidBody.AddForce(Vector3.up * 10, ForceMode2D.Impulse);
-        rigidBody.velocity = moveDir * 15;
+        if (rigidBody.bodyType != RigidbodyType2D.Kinematic)
+        {            
+            if (Vector2.Distance(rigidBody.transform.position, playerHingeJoint.transform.position) < 4)
+            {
+                rigidBody.velocity = moveDir * 15;
+                
+            }
+            rigidBody.freezeRotation = false;
+        }
+        else
+        {
+            rigidBody.velocity = Vector2.zero;
+            rigidBody.freezeRotation = true;
+            
+        }
+            
     }
 
     private void SpawnChainLinks()
@@ -88,10 +102,9 @@ public class GrapplePhysics : MonoBehaviour
             {
                 obj.GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = false;
             }
-            
+
             obj.transform.position = pm.transform.position + (Vector3)pm.GetComponent<Rigidbody2D>().velocity * Time.deltaTime;
             obj.GetComponent<Rigidbody2D>().MovePosition(pm.transform.position);
-            
         }
 
         for (int i = 0; i < objs.Length; i++)

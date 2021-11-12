@@ -96,8 +96,8 @@ GameObject:
   - component: {fileID: 6381383999729442742}
   - component: {fileID: 6381383999729442737}
   - component: {fileID: 6381383999729442740}
-  - component: {fileID: 1129126144664834903}
-  m_Layer: 0
+  - component: {fileID: 3221812252433441585}
+  m_Layer: 11
   m_Name: TestGrappleJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,14 +132,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_Mass: 3
+  m_LinearDrag: 3
+  m_AngularDrag: 3
+  m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &6381383999729442737
 MonoBehaviour:
@@ -170,7 +170,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
---- !u!233 &1129126144664834903
+--- !u!233 &3221812252433441585
 HingeJoint2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,7 +179,7 @@ HingeJoint2D:
   m_GameObject: {fileID: 6381383999729442739}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 0
+  m_EnableCollision: 1
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -193,4 +193,4 @@ HingeJoint2D:
   m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_UpperAngle: 90

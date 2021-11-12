@@ -61,16 +61,18 @@ public class GrappleRope : MonoBehaviour
             if (hit && hit.collider)
             {
                 print("hitta nemo");
-                Vector2 closestPoint = GetNearestVertex(hit, out int path);
+                Vector2 closestPoint = GetNearestVertex(hit, out int path, out int vertexIndex);
 
                 if (Vector2.Distance(end, closestPoint) > minDistance)
                 {
                     GameObject newObject = new GameObject("Node", typeof(Node));
                     newObject.transform.position = closestPoint;
 
-                    colPathCenter = GetPathCenter(hit.collider as CompositeCollider2D, path);
+                    //colPathCenter = GetPathCenter(hit.collider as CompositeCollider2D, path);
+                    Vector2 normal = GetVertexNormal(hit.collider as CompositeCollider2D, path, vertexIndex);
 
-                    newObject.GetComponent<Node>().normalDirection = (closestPoint - colPathCenter).normalized;
+                    newObject.GetComponent<Node>().normalDirection = normal;
+                    //newObject.GetComponent<Node>().normalDirection = (closestPoint - colPathCenter).normalized;
                     //newObject.GetComponent<Node>().normalDirection = hit.normal;
 
                     RopeNode newClosest = new RopeNode(newObject.transform, closestAtBeginning.destinationTrans);
@@ -99,13 +101,15 @@ public class GrappleRope : MonoBehaviour
             Vector3 rhs = playerPos - currentNodePos;
 
             Vector3 lhs = new Vector3(-nodePlane.y, nodePlane.x, 0) / Mathf.Sqrt(nodePlane.x * nodePlane.x + nodePlane.y * nodePlane.y);
-            
+
             if (Vector3.Dot(lhs, lastNode.GetComponent<Node>().normalDirection) < 0)
                 lhs *= -1f;
 
-            print(Vector3.Dot(lhs, rhs));
+            //print(Vector3.Dot(rhs.normalized, lhs.normalized));
 
-            if (Vector3.Dot(lhs, rhs) < 0)
+            // Allow for margin of error since normal calculation isn't always accurate.
+            // But this will at least prevent the rope from crashing regardless of error.
+            if (Vector3.Dot(rhs.normalized, lhs.normalized) < .125f)
             {
                 return;
             }
@@ -137,7 +141,29 @@ public class GrappleRope : MonoBehaviour
 
         prevPrevNode.destinationTrans = player.transform;
 
+        anchorPos = prevPrevNode.positionTrans.position;
+
         lastNode = prevPrevNode.positionTrans.gameObject;
+    }
+
+    private Vector2 GetVertexNormal(CompositeCollider2D cc2d, int path, int vertexIndex)
+    {
+        Vector2 result = Vector2.zero;
+        int vertices = cc2d.GetPath(path, vertexCache);
+
+        Vector2 thisVertex = vertexCache[vertexIndex];
+
+        Vector2 prevVertex = vertexIndex == 0 ? vertexCache[vertices - 1] : vertexCache[vertexIndex - 1];
+
+        Vector2 nextVertex = vertexIndex == vertices - 1 ? vertexCache[0] : vertexCache[vertexIndex + 1];
+
+        Vector2 prevToThis = (thisVertex - prevVertex).normalized;
+
+        Vector2 nextToThis = (thisVertex - nextVertex).normalized;
+
+        result = (prevToThis + nextToThis).normalized;
+
+        return result;
     }
 
     private Vector2 GetPathCenter(CompositeCollider2D cc2d, int path)
@@ -175,11 +201,12 @@ public class GrappleRope : MonoBehaviour
         Gizmos.DrawSphere(colPathCenter, 0.1f);
     }
 
-    private Vector2 GetNearestVertex(RaycastHit2D hit, out int path)
+    private Vector2 GetNearestVertex(RaycastHit2D hit, out int path, out int vertexIndex)
     {
         CompositeCollider2D cc2d = hit.collider as CompositeCollider2D;
 
         path = -1;
+        vertexIndex = -1;
 
         if (!cc2d)
         {
@@ -201,12 +228,22 @@ public class GrappleRope : MonoBehaviour
                 {
                     currentLength = thisLength;
                     point = vertexCache[ii];
+                    vertexIndex = ii;
                     path = i;
                 }
             }
         }
 
         return point;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (RopeNode node in ropeNodes)
+        {
+            if (node.positionTrans.GetComponent<Node>())
+                Destroy(node.positionTrans.gameObject);
+        }
     }
 
 }

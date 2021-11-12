@@ -15,7 +15,7 @@ public class GrappleHook : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     private PlayerMovement playerMovement;
-    private GrappleRope grappleRope;
+    public GrappleRope grappleRope;
 
     public bool hasHitSurface;
 
@@ -48,13 +48,21 @@ public class GrappleHook : MonoBehaviour
             hasHitSurface = true;
             //might not allow it to move at all?
             rigidBody.bodyType = RigidbodyType2D.Static;
-            
             playerMovement.OnGrappleHit(other.GetContact(0).point);
-            
+
+            //transform.parent = other.transform;
+
+
         }
         else
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private void OnDisable()
+    {
+        //transform.parent = null;
+        Destroy(grappleRope);
     }
 }
