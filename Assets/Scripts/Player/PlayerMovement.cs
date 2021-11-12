@@ -172,8 +172,18 @@ public partial class PlayerMovement : MonoBehaviour
 
         grappleJoint.ChangeDistance(playerInput.vertical * grappleReelSpeed * Time.deltaTime);
 
+        
+
         reelForce = grappleReelSpeed * playerInput.vertical
                                      * (grappleJoint.transform.position - transform.position).normalized;
+
+        if (isGrappling)
+        {
+            grappleJoint.transform.position = grappleHook.transform.position;
+
+            //grappleJoint.transform.position = grappleHook.grappleRope.AnchorPosition;
+            //grappleJoint.GetComponent<Rigidbody2D>().MovePosition(grappleHook.grappleRope.AnchorPosition);
+        }
     }
 
     private void GrappleFire()
