@@ -33,6 +33,8 @@ public class GrappleRope : MonoBehaviour
     void Start()
     {
         ropeNodes.Add(new RopeNode(grappleHook.transform, player.transform));
+
+        //player.OnGrappleHit(anchorPos);
     }
 
     void Update()
@@ -81,6 +83,9 @@ public class GrappleRope : MonoBehaviour
                     closestAtBeginning.destinationTrans = newClosest.positionTrans;
 
                     anchorPos = newObject.transform.position;
+
+                    player.OnGrappleHit(anchorPos);
+                    player.grappleJoint.transform.position = anchorPos;
 
                     lastNode = newObject;
                 }
@@ -143,6 +148,9 @@ public class GrappleRope : MonoBehaviour
 
         anchorPos = prevPrevNode.positionTrans.position;
 
+        player.OnGrappleHit(anchorPos);
+        player.grappleJoint.transform.position = anchorPos;
+
         lastNode = prevPrevNode.positionTrans.gameObject;
     }
 
@@ -194,11 +202,8 @@ public class GrappleRope : MonoBehaviour
                 Debug.DrawLine(ropeNodes[i].positionTrans.position, ropeNodes[i].destinationTrans.position, Color.red);
         }
 
-        Gizmos.color = Color.blue;
+        Gizmos.color = new Color(0, 0, 1, 0.3f);
         Gizmos.DrawSphere(anchorPos, 0.1f);
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(colPathCenter, 0.1f);
     }
 
     private Vector2 GetNearestVertex(RaycastHit2D hit, out int path, out int vertexIndex)
