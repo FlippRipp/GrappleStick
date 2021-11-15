@@ -11,70 +11,80 @@ public partial class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidBody;
 
     [Header("Grapple")]
-    [SerializeField]
-    private GameObject grappleHookPrefab;
+    [SerializeField] private GameObject grappleHookPrefab;
 
-    [SerializeField, Range(0, 50)]
-    private float grappleHookProjectileSpeed = 10;
-    [SerializeField, Range(0, 50)]
-    private float grappleReelSpeed = 2;
-    [SerializeField]
-    private GameObject grappleJointPrefab;
+    [SerializeField, Range(0, 50)] private float grappleHookProjectileSpeed = 10;
+    [SerializeField, Range(0, 50)] private float grappleReelSpeed = 2;
+    [SerializeField] private GameObject grappleJointPrefab;
     
     private bool isGrappling = false;
     private GrappleHook grappleHook;
-    [HideInInspector]
-    public GrappleJoint grappleJoint;
-    [HideInInspector]
-    public List<Vector2> grappleRopePoint = new List<Vector2>();
+    [HideInInspector] public GrappleJoint grappleJoint;
+    [HideInInspector] public List<Vector2> grappleRopePoint = new List<Vector2>();
     
     private Vector2 reelForce;
 
 
     [Space]
     [Header("Leg")]
-    [SerializeField]
-    private LegController legController;
-    [SerializeField]
-    private float legMaxLenght = 2;
-    [SerializeField]
-    private float legMinLenght = 2;
-    [SerializeField]
-    private float legForce = 1;
+    [SerializeField] private LegController legController;
+    [SerializeField] private float legMaxLenght = 2;
+    [SerializeField] private float legMinLenght = 2;
+    [SerializeField] private float legForce = 1;
 
-    [SerializeField]
-    private float legChargeMaxTime = 3;
-    [SerializeField]
-    private float legExtendSpeed = 2;
-    [SerializeField]
-    private float legRetractSpeed = 2;
-    [SerializeField]
-    private LayerMask legCollisionMask;
+    [SerializeField] private float legChargeMaxTime = 3;
+    [SerializeField] private float legExtendSpeed = 2;
+    [SerializeField] private float legRetractSpeed = 2;
+    [SerializeField] private LayerMask legCollisionMask;
 
-    [SerializeField] private UnityEvent<float> onFootCharge;
+
 
     [SerializeField] private float legMinShakeMagnitude = 0f;
     [SerializeField] private float legMaxShakeMagnitude = 0.2f;
     [SerializeField] private float legMinShakeFrequency = 0.3f;
     [SerializeField] private float legMaxShakeFrequency = 0.3f;
-    
+
 
     private bool legCharging;
     private float legChargeTime;
 
     private Vector2 legDirection;
     
+    [Header("Health & Damage")]
+    [SerializeField] private float maxHealth = 100;
+    [SerializeField] private float currentHealth;
+
+    [SerializeField] private float maxSize;
+    [SerializeField] private float minSize;
+    [SerializeField] private float minDamageVelocity = 10;
+    [SerializeField] private float maxDamageVelocity = 100;
+    [SerializeField] private float minDamage = 10;
+    [SerializeField] private float maxDamage = 100;
+    
+    [Header("Events")]
+    [SerializeField] private UnityEvent<float> onFootCharge;
+    [SerializeField] private UnityEvent<float> onVelocityCharge;
+    [SerializeField] private UnityEvent<float, float> onHealthChanged;
+
+
+    private Vector2 averageVelocity;
+    
+
+
+
     // Start is called before the first frame update
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         rigidBody = GetComponent<Rigidbody2D>();
-        
+        currentHealth = maxHealth;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        onVelocityCharge.Invoke(rigidBody.velocity.magnitude);
         GrapplingHockInputs();
         GrappleMovement();
         LegUpdate();
@@ -166,6 +176,7 @@ public partial class PlayerMovement : MonoBehaviour
             legDirection);
     }
 
+
     private void GrappleMovement()
     {
         if (!isGrappling) return;
@@ -187,7 +198,7 @@ public partial class PlayerMovement : MonoBehaviour
             //grappleJoint.GetComponent<Rigidbody2D>().MovePosition(grappleHook.grappleRope.AnchorPosition);
         }
     }
-
+    
     private void GrappleFire()
     {
         if (isGrappling)
@@ -248,12 +259,46 @@ public partial class PlayerMovement : MonoBehaviour
         grappleJoint.SetUpAttachment(rigidBody);
 
     }
+    
+    private void UpdateSize()
+    {
+        float size = Mathf.Lerp(minSize, maxSize, currentHealth / maxHealth);
+        transform.localScale = new Vector3(size, size, 1);
+    }
+
+    public void DamageHealth(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log(damage);
+        if (currentHealth < 0)
+        {
+            Debug.Log("I'm to lazy to make a death screen so you get a debug instead");
+        }
+        onHealthChanged.Invoke(currentHealth, maxHealth);
+        UpdateSize();
+    }
+
+    public void HealPlayer(float healthToHeal)
+    {
+        currentHealth = Mathf.Min(maxHealth, currentHealth + healthToHeal);
+        onHealthChanged.Invoke(currentHealth, maxHealth);
+        UpdateSize();
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.GetComponent<MovingArrow>())
         {
             GrappleRetract();
+        }
+
+        
+        float impactVelocity = Vector2.Dot(other.relativeVelocity, other.GetContact(0).normal);
+        if (impactVelocity > minDamageVelocity)
+        {
+            
+            DamageHealth(Mathf.Lerp(minDamage, maxDamage, (impactVelocity - minDamageVelocity) /
+                                                          (maxDamageVelocity - minDamageVelocity)));
         }
     }
 }
