@@ -64,6 +64,6 @@ public class GrappleHook : MonoBehaviour
     private void OnDisable()
     {
         //transform.parent = null;
-        Destroy(grappleRope);
+        Destroy(grappleRope.gameObject);
     }
 }
