@@ -49,7 +49,6 @@ public class PlayerEmotions : MonoBehaviour
         //if (collision.GetContact(0).normalImpulse)
         _spriteRenderer.sprite = _ouchSpriteMajor;
 
-        print(collision.GetContact(0).normalImpulse * _painEnduranceMultiplier);
         yield return new WaitForSeconds(collision.GetContact(0).normalImpulse * _painEnduranceMultiplier);
 
         if (_hurtCycleImageSpeed == 0)
