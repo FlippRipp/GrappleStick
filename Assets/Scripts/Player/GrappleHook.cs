@@ -28,6 +28,7 @@ public class GrappleHook : MonoBehaviour
     {
         gameObject.SetActive(true);
         rigidBody.bodyType = RigidbodyType2D.Dynamic;
+        rigidBody.simulated = true;
         hasHitSurface = false;
         playerMovement = playerM;
         rigidBody.velocity = moveDir * speed;
@@ -56,7 +57,7 @@ public class GrappleHook : MonoBehaviour
         {
             hasHitSurface = true;
             //might not allow it to move at all?
-            rigidBody.bodyType = RigidbodyType2D.Static;
+            rigidBody.simulated = false;
             print("oo");
             playerMovement.OnGrappleHit(other.GetContact(0).point);
 
