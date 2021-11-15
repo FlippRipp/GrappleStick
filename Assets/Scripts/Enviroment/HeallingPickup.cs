@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class HeallingPickup : MonoBehaviour
 {
-    private float healAmount = 10;
+    [SerializeField] private float healAmount = 10;
+    //[SerializeField] private bool reespawns;
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         PlayerMovement pM = other.gameObject.GetComponent<PlayerMovement>();
