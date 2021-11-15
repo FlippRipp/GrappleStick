@@ -44,6 +44,8 @@ public partial class PlayerMovement : MonoBehaviour
     [SerializeField] private float legMinShakeFrequency = 0.3f;
     [SerializeField] private float legMaxShakeFrequency = 0.3f;
 
+    [SerializeField] private bool isLegReversed = false;
+
 
     private bool legCharging;
     private float legChargeTime;
@@ -52,10 +54,10 @@ public partial class PlayerMovement : MonoBehaviour
     
     [Header("Health & Damage")]
     [SerializeField] private float maxHealth = 100;
-    [SerializeField] private float currentHealth;
+    private float currentHealth;
 
-    [SerializeField] private float maxSize;
-    [SerializeField] private float minSize;
+    [SerializeField] private float maxSize = 1;
+    [SerializeField] private float minSize = 0.1f;
     [SerializeField] private float minDamageVelocity = 10;
     [SerializeField] private float maxDamageVelocity = 100;
     [SerializeField] private float minDamage = 10;
@@ -78,6 +80,7 @@ public partial class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rigidBody = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+        UpdateSize();
 
     }
 
@@ -113,7 +116,10 @@ public partial class PlayerMovement : MonoBehaviour
         if (Camera.main) mousePosition = Camera.main.ScreenToWorldPoint(
             new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
             
-        legDirection = -(mousePosition - (Vector2)transform.position).normalized;
+        if(isLegReversed) legDirection = -(mousePosition - (Vector2)transform.position).normalized;
+        
+        else legDirection = (mousePosition - (Vector2)transform.position).normalized;
+
     }
 
     private void LegUpdate()
