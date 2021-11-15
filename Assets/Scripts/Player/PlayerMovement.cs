@@ -45,6 +45,7 @@ public partial class PlayerMovement : MonoBehaviour
     [SerializeField] private float legMaxShakeFrequency = 0.3f;
 
     [SerializeField] private bool isLegReversed = false;
+    [SerializeField] private bool canAimWhileCharging = false;
 
 
     private bool legCharging;
@@ -124,6 +125,12 @@ public partial class PlayerMovement : MonoBehaviour
 
     private void LegUpdate()
     {
+        if (canAimWhileCharging)
+        {
+            LegRotation();
+            legController.SetLegDirection(legDirection);
+
+        }
 
         if (legCharging)
         {
