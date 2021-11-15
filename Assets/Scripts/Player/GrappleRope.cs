@@ -62,6 +62,12 @@ public class GrappleRope : MonoBehaviour
             RaycastHit2D hit = hits[i];
             if (hit && hit.collider)
             {
+                if (hit.collider.CompareTag("Platform"))
+                {
+                    if (hit.collider.transform.parent.parent.GetComponent<MovingPlatform>())
+                        continue;
+                }
+
                 print("hitta nemo");
                 Vector2 closestPoint = GetNearestVertex(hit, out int path, out int vertexIndex);
 
@@ -134,6 +140,12 @@ public class GrappleRope : MonoBehaviour
             RaycastHit2D hit = hits[i];
             if (hit && hit.collider)
             {
+                if (hit.collider.CompareTag("Platform"))
+                {
+                    if (hit.collider.transform.parent.parent.GetComponent<MovingPlatform>())
+                        continue;
+                }
+
                 return;
             }
         }
