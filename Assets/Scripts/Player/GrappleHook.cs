@@ -40,6 +40,15 @@ public class GrappleHook : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (hasHitSurface && playerMovement && playerMovement.grappleJoint
+            && grappleRope && grappleRope.ropeNodes.Count <= 1)
+        {
+            playerMovement.grappleJoint.transform.position = transform.position;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(hasHitSurface) return;
@@ -51,7 +60,7 @@ public class GrappleHook : MonoBehaviour
             print("oo");
             playerMovement.OnGrappleHit(other.GetContact(0).point);
 
-            //transform.parent = other.transform;
+            transform.parent = other.transform;
 
 
         }
