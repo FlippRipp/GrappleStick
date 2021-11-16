@@ -31,6 +31,7 @@ public partial class PlayerMovement : MonoBehaviour
     [SerializeField] private float legMaxLenght = 2;
     [SerializeField] private float legMinLenght = 2;
     [SerializeField] private float legForce = 1;
+    [SerializeField] private float legMinForce = 1;
 
     [SerializeField] private float legChargeMaxTime = 3;
     [SerializeField] private float legExtendSpeed = 2;
@@ -63,7 +64,18 @@ public partial class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxDamageVelocity = 100;
     [SerializeField] private float minDamage = 10;
     [SerializeField] private float maxDamage = 100;
-    
+
+    [SerializeField] private ParticleSystem minorWoundParticlePrefab;
+    [SerializeField, Min(0)] private float velocityToSufferMinorWound = 10;
+    [SerializeField, Min(0)] private float minorWoundForce = 0;
+    [SerializeField] private ParticleSystem _mediumWoundParticlePrefab;
+    [SerializeField, Min(0)] private float velocityToSufferMediumWound = 18;
+    [SerializeField, Min(0)] private float mediumWoundForce = 0;
+    [SerializeField] private ParticleSystem _majorWoundParticlePrefab;
+    [SerializeField, Min(0)] private float velocityToSufferMajorWound = 27;
+    [SerializeField, Min(0)] private float majorWoundForce = 0;
+
+    [Space]
     [Header("Events")]
     [SerializeField] private UnityEvent<float> onFootCharge;
     [SerializeField] private UnityEvent<float> onVelocityCharge;
@@ -71,9 +83,10 @@ public partial class PlayerMovement : MonoBehaviour
 
 
     private Vector2 averageVelocity;
-    
 
-
+    private List<ParticleSystem> minorHurtParticleSystems = new List<ParticleSystem>();
+    private List<ParticleSystem> mediumHurtParticleSystems = new List<ParticleSystem>();
+    private List<ParticleSystem> majorHurtParticleSystems = new List<ParticleSystem>();
 
     // Start is called before the first frame update
     void Awake()
@@ -92,6 +105,7 @@ public partial class PlayerMovement : MonoBehaviour
         GrapplingHockInputs();
         GrappleMovement();
         LegUpdate();
+        WoundUpdate();
     }
 
     /// <summary>
@@ -121,6 +135,24 @@ public partial class PlayerMovement : MonoBehaviour
         
         else legDirection = (mousePosition - (Vector2)transform.position).normalized;
 
+    }
+
+    private void WoundUpdate()
+    {
+        foreach (ParticleSystem wound in minorHurtParticleSystems)
+        {
+            rigidBody.AddForce(-(Vector2)wound.transform.forward * minorWoundForce);
+        }
+
+        foreach (ParticleSystem wound in mediumHurtParticleSystems)
+        {
+            rigidBody.AddForce(-(Vector2)wound.transform.forward * mediumWoundForce);
+        }
+
+        foreach (ParticleSystem wound in majorHurtParticleSystems)
+        {
+            rigidBody.AddForce(-(Vector2)wound.transform.forward * majorWoundForce);
+        }
     }
 
     private void LegUpdate()
@@ -176,12 +208,13 @@ public partial class PlayerMovement : MonoBehaviour
         float distance = Mathf.Max(legMinLenght, legMaxLenght * (legChargeTime / legChargeMaxTime));
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, legDirection,
-                legMaxLenght * (legChargeTime / legChargeMaxTime), legCollisionMask);
+            legMaxLenght * (legChargeTime / legChargeMaxTime), legCollisionMask);
 
         if (hit2D.collider)
         {
             distance = hit2D.distance;
-            rigidBody.AddForce(-legDirection * (legForce * (legChargeTime / legChargeMaxTime)), ForceMode2D.Impulse);
+            rigidBody.AddForce(-legDirection * Mathf.Max(legMinForce,
+                legForce * (legChargeTime / legChargeMaxTime)), ForceMode2D.Impulse);
         }
 
         distance = Mathf.Min(distance, legMaxLenght);
@@ -196,7 +229,9 @@ public partial class PlayerMovement : MonoBehaviour
 
         RopeCut();
 
-        grappleJoint.ChangeDistance(playerInput.vertical * grappleReelSpeed * Time.deltaTime);
+        float verticalRealInput = Mathf.Min(playerInput.vertical + Input.GetAxis("Mouse ScrollWheel"));
+
+        grappleJoint.ChangeDistance(verticalRealInput * grappleReelSpeed * Time.deltaTime);
 
         
 
@@ -298,6 +333,28 @@ public partial class PlayerMovement : MonoBehaviour
         UpdateSize();
     }
 
+    private void AddWound(Vector2 impactPoint, float impactVelocity)
+    {
+        ParticleSystem particle;
+
+        Quaternion woundRotation = Quaternion.LookRotation(((Vector3)impactPoint - transform.position).normalized);
+        if (impactVelocity >= velocityToSufferMajorWound)
+        {
+            particle = Instantiate(_majorWoundParticlePrefab, impactPoint, woundRotation, transform);
+            majorHurtParticleSystems.Add(particle);
+        }
+        else if (impactVelocity >= velocityToSufferMediumWound)
+        {
+            particle = Instantiate(_mediumWoundParticlePrefab, impactPoint, woundRotation, transform);
+            mediumHurtParticleSystems.Add(particle);
+        }
+        else if (impactVelocity >= velocityToSufferMinorWound)
+        {
+            particle = Instantiate(minorWoundParticlePrefab, impactPoint, woundRotation, transform);
+            minorHurtParticleSystems.Add(particle);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.GetComponent<MovingArrow>())
@@ -312,6 +369,8 @@ public partial class PlayerMovement : MonoBehaviour
             
             DamageHealth(Mathf.Lerp(minDamage, maxDamage, (impactVelocity - minDamageVelocity) /
                                                           (maxDamageVelocity - minDamageVelocity)));
+
+            AddWound(other.GetContact(0).point, impactVelocity);
         }
     }
 }
