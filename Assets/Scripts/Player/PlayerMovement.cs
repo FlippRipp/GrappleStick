@@ -31,6 +31,7 @@ public partial class PlayerMovement : MonoBehaviour
     [SerializeField] private float legMaxLenght = 2;
     [SerializeField] private float legMinLenght = 2;
     [SerializeField] private float legForce = 1;
+    [SerializeField] private float legMinForce = 1;
 
     [SerializeField] private float legChargeMaxTime = 3;
     [SerializeField] private float legExtendSpeed = 2;
@@ -207,12 +208,13 @@ public partial class PlayerMovement : MonoBehaviour
         float distance = Mathf.Max(legMinLenght, legMaxLenght * (legChargeTime / legChargeMaxTime));
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, legDirection,
-                legMaxLenght * (legChargeTime / legChargeMaxTime), legCollisionMask);
+            legMaxLenght * (legChargeTime / legChargeMaxTime), legCollisionMask);
 
         if (hit2D.collider)
         {
             distance = hit2D.distance;
-            rigidBody.AddForce(-legDirection * (legForce * (legChargeTime / legChargeMaxTime)), ForceMode2D.Impulse);
+            rigidBody.AddForce(-legDirection * Mathf.Max(legMinForce,
+                legForce * (legChargeTime / legChargeMaxTime)), ForceMode2D.Impulse);
         }
 
         distance = Mathf.Min(distance, legMaxLenght);
@@ -227,7 +229,9 @@ public partial class PlayerMovement : MonoBehaviour
 
         RopeCut();
 
-        grappleJoint.ChangeDistance(playerInput.vertical * grappleReelSpeed * Time.deltaTime);
+        float verticalRealInput = Mathf.Min(playerInput.vertical + Input.GetAxis("Mouse ScrollWheel"));
+
+        grappleJoint.ChangeDistance(verticalRealInput * grappleReelSpeed * Time.deltaTime);
 
         
 
