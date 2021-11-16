@@ -9,6 +9,9 @@ public class MovingObjectSpawner : MonoBehaviour
     private float timeBetweenSpawns = 1;
 
     private float spawnTimer;
+
+    [SerializeField]
+    private float maxTravelDistance = 10;
     
     [SerializeField]
     private Transform[] spawnPoints;
@@ -26,6 +29,14 @@ public class MovingObjectSpawner : MonoBehaviour
             int i = Random.Range(0, spawnPoints.Length - 1);
             spawnedObjects.Add(Instantiate(prefabToSpawn, spawnPoints[i].position, spawnPoints[i].rotation));
             spawnTimer = 0;
+        }
+
+        foreach (GameObject obj in spawnedObjects)
+        {
+            if (Vector2.Distance(obj.transform.position, transform.position) > maxTravelDistance)
+            {
+                obj.SetActive(false);
+            }
         }
     }
 }
