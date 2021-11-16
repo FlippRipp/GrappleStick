@@ -294,6 +294,7 @@ MonoBehaviour:
   legMaxLenght: 2
   legMinLenght: 0.7
   legForce: 4
+  legMinForce: 1
   legChargeMaxTime: 1
   legExtendSpeed: 10
   legRetractSpeed: 2
@@ -305,6 +306,7 @@ MonoBehaviour:
   legMinShakeFrequency: 0.3
   legMaxShakeFrequency: 0.3
   isLegReversed: 0
+  canAimWhileCharging: 0
   maxHealth: 100
   maxSize: 1
   minSize: 0.1
@@ -312,6 +314,15 @@ MonoBehaviour:
   maxDamageVelocity: 100
   minDamage: 10
   maxDamage: 100
+  minorWoundParticlePrefab: {fileID: 2225060452296357719, guid: c63adc059ab26ad4ea34961b83c85274, type: 3}
+  velocityToSufferMinorWound: 10
+  minorWoundForce: 0
+  _mediumWoundParticlePrefab: {fileID: 3421096334448745736, guid: 40ae8578e6275754c946e7dd088cfdaf, type: 3}
+  velocityToSufferMediumWound: 18
+  mediumWoundForce: 0
+  _majorWoundParticlePrefab: {fileID: 3919782923371733326, guid: a70f7e5943b34864aa35894d2677395b, type: 3}
+  velocityToSufferMajorWound: 27
+  majorWoundForce: 0
   onFootCharge:
     m_PersistentCalls:
       m_Calls: []
