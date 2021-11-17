@@ -9,11 +9,14 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
-        if (rb)
+        if (other.tag == "Player")
         {
-            Debug.Log("aaaaaa");
-            portalController.Teleport(this, rb);
+            Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+            if (rb)
+            {
+                Debug.Log("aaaaaa");
+                portalController.Teleport(this, rb);
+            }
         }
     }
 }
