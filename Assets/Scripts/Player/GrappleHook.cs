@@ -67,6 +67,7 @@ public class GrappleHook : MonoBehaviour
         }
         else
         {
+            transform.parent = null;
             gameObject.SetActive(false);
         }
     }

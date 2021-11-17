@@ -252,6 +252,7 @@ public partial class PlayerMovement : MonoBehaviour
         if (isGrappling)
         {
             GrappleRetract();
+            
         }
 
         Vector2 mousePosition = Vector2.zero;
@@ -286,6 +287,7 @@ public partial class PlayerMovement : MonoBehaviour
             grappleRopePoint.Clear();
             isGrappling = false;
         }
+        grappleHook.gameObject.transform.parent = null;
         grappleHook.gameObject.SetActive(false);
     }
 
