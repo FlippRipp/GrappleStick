@@ -15,6 +15,8 @@ public class GrappleRope : MonoBehaviour
     private GameObject lastNode;
     private GameObject grappleNode;
 
+    private LineRenderer lineRenderer;
+
     private bool distanceSet = false;
 
     private float minDistance = .25f;
@@ -34,12 +36,14 @@ public class GrappleRope : MonoBehaviour
     {
         ropeNodes.Add(new RopeNode(grappleHook.transform, player.transform));
 
+        lineRenderer = GetComponent<LineRenderer>();
         //player.OnGrappleHit(anchorPos);
     }
 
     void Update()
     {
-        HandleGrapple(); 
+        HandleGrapple();
+        HandleLineRenderer();
     }
 
     private void HandleGrapple()
@@ -164,6 +168,20 @@ public class GrappleRope : MonoBehaviour
         player.grappleJoint.transform.position = anchorPos;
 
         lastNode = prevPrevNode.positionTrans.gameObject;
+    }
+
+    private void HandleLineRenderer()
+    {
+        if (lineRenderer.positionCount != ropeNodes.Count + 1)
+        {
+            lineRenderer.positionCount = ropeNodes.Count + 1;
+        }
+
+        for (int i = 0; i < lineRenderer.positionCount && i < ropeNodes.Count; i++)
+        {
+            lineRenderer.SetPosition(i, ropeNodes[i].positionTrans.position);
+            lineRenderer.SetPosition(i + 1, ropeNodes[i].destinationTrans.position);
+        }
     }
 
     private Vector2 GetVertexNormal(CompositeCollider2D cc2d, int path, int vertexIndex)

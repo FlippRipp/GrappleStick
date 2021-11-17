@@ -300,7 +300,7 @@ MonoBehaviour:
   legRetractSpeed: 2
   legCollisionMask:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 4353
   legMinShakeMagnitude: 0
   legMaxShakeMagnitude: 0.2
   legMinShakeFrequency: 0.3
