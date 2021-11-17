@@ -45451,6 +45451,14 @@ PrefabInstance:
       propertyPath: legChargeMaxTime
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 1709082654082433140, guid: 1702d20c3c8b04643b32040417820ba3, type: 3}
+      propertyPath: maxDamageVelocity
+      value: 1000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1709082654082433140, guid: 1702d20c3c8b04643b32040417820ba3, type: 3}
+      propertyPath: minDamageVelocity
+      value: 1000000
+      objectReference: {fileID: 0}
     - target: {fileID: 4956172873256467517, guid: 1702d20c3c8b04643b32040417820ba3, type: 3}
       propertyPath: m_Enabled
       value: 0
