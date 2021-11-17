@@ -318,10 +318,10 @@ MonoBehaviour:
   velocityToSufferMinorWound: 10
   minorWoundForce: 0
   _mediumWoundParticlePrefab: {fileID: 3421096334448745736, guid: 40ae8578e6275754c946e7dd088cfdaf, type: 3}
-  velocityToSufferMediumWound: 18
+  velocityToSufferMediumWound: 15
   mediumWoundForce: 1
   _majorWoundParticlePrefab: {fileID: 3919782923371733326, guid: a70f7e5943b34864aa35894d2677395b, type: 3}
-  velocityToSufferMajorWound: 27
+  velocityToSufferMajorWound: 25
   majorWoundForce: 1.2
   onFootCharge:
     m_PersistentCalls:
