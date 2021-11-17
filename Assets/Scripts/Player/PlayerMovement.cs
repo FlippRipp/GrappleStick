@@ -333,6 +333,7 @@ public partial class PlayerMovement : MonoBehaviour
         currentHealth = Mathf.Min(maxHealth, currentHealth + healthToHeal);
         onHealthChanged.Invoke(currentHealth, maxHealth);
         UpdateSize();
+        HealWound();
     }
 
     private void AddWound(Vector2 impactPoint, float impactVelocity)
@@ -355,6 +356,35 @@ public partial class PlayerMovement : MonoBehaviour
             particle = Instantiate(minorWoundParticlePrefab, impactPoint, woundRotation, transform);
             minorHurtParticleSystems.Add(particle);
         }
+    }
+
+    private void HealWound()
+    {
+        int rand = UnityEngine.Random.Range(0, 3);
+
+        List<ParticleSystem> systemToRemoveFrom;
+
+        if (majorHurtParticleSystems.Count > 0)
+            systemToRemoveFrom = majorHurtParticleSystems;
+        else if (mediumHurtParticleSystems.Count > 0)
+            systemToRemoveFrom = mediumHurtParticleSystems;
+        else
+            systemToRemoveFrom = minorHurtParticleSystems;
+        //switch (rand)
+        //{
+        //    default:
+        //    case 0: systemToRemoveFrom = minorHurtParticleSystems; break;
+        //    case 1: systemToRemoveFrom = mediumHurtParticleSystems; break;
+        //    case 2: systemToRemoveFrom = majorHurtParticleSystems; break;
+        //}
+
+        if (systemToRemoveFrom.Count > 0)
+        {
+            ParticleSystem part = systemToRemoveFrom[UnityEngine.Random.Range(0, systemToRemoveFrom.Count)];
+            Destroy(part.gameObject);
+            systemToRemoveFrom.Remove(part);
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D other)
