@@ -14676,15 +14676,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1709082654082433140, guid: 1702d20c3c8b04643b32040417820ba3, type: 3}
       propertyPath: velocityToSufferMajorWound
-      value: 10000
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 1709082654082433140, guid: 1702d20c3c8b04643b32040417820ba3, type: 3}
       propertyPath: velocityToSufferMinorWound
-      value: 10000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1709082654082433140, guid: 1702d20c3c8b04643b32040417820ba3, type: 3}
       propertyPath: velocityToSufferMediumWound
-      value: 10000
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5332736529611679428, guid: 1702d20c3c8b04643b32040417820ba3, type: 3}
       propertyPath: m_TagString

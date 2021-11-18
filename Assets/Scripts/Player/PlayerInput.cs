@@ -8,7 +8,7 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
     }
-
+    public bool useScrollWheel = false;
     public bool leftMouseButtonPressedDown = false;
     public bool rightMouseButtonPressedDown = false;
     public bool rightMouseButtonPressedUp = false;
@@ -24,5 +24,9 @@ public class PlayerInput : MonoBehaviour
         rightMouseButtonPressedDown = Input.GetButtonDown("Fire2");
         rightMouseButtonPressedUp= Input.GetButtonUp("Fire2");
         vertical = Input.GetAxis("Vertical");
+        if (useScrollWheel)
+        {
+            vertical = Input.GetAxis("Mouse ScrollWheel");
+        }
     }
 }

@@ -14,7 +14,7 @@ public partial class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject grappleHookPrefab;
 
     [SerializeField, Range(0, 50)] private float grappleHookProjectileSpeed = 10;
-    [SerializeField, Range(0, 50)] private float grappleReelSpeed = 2;
+    [SerializeField, Range(0, 500)] private float grappleReelSpeed = 2;
     [SerializeField] private GameObject grappleJointPrefab;
     
     private bool isGrappling = false;
