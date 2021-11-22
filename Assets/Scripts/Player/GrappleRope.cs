@@ -12,12 +12,9 @@ public class GrappleRope : MonoBehaviour
 
     public List<RopeNode> ropeNodes = new List<RopeNode>();
 
-    private GameObject lastNode;
-    private GameObject grappleNode;
+    private GameObject GetLastNodeObject() => ropeNodes.Count > 0 ? ropeNodes[ropeNodes.Count - 1].startTrans.gameObject : null;
 
     private LineRenderer lineRenderer;
-
-    private bool distanceSet = false;
 
     private float minDistance = .25f;
 
@@ -27,8 +24,6 @@ public class GrappleRope : MonoBehaviour
 
     private Vector2[] vertexCache = new Vector2[128];
 
-    private Vector2 colPathCenter;
-
     private Vector2 anchorPos;
     public Vector2 AnchorPosition => anchorPos;
 
@@ -37,7 +32,6 @@ public class GrappleRope : MonoBehaviour
         ropeNodes.Add(new RopeNode(grappleHook.transform, player.transform));
 
         lineRenderer = GetComponent<LineRenderer>();
-        //player.OnGrappleHit(anchorPos);
     }
 
     void Update()
@@ -51,15 +45,15 @@ public class GrappleRope : MonoBehaviour
         if (!player || !grappleHook)
             return;
 
-        // Beginning, as in beginning of this method.
-        RopeNode closestAtBeginning = ropeNodes[ropeNodes.Count - 1];
+        // The node the player is connected to in the beginning of this method.
+        // Is always the last index.
+        RopeNode playerNode = ropeNodes[ropeNodes.Count - 1];
         
-        Vector2 start = closestAtBeginning.destinationTrans.position;
-        Vector2 end = closestAtBeginning.positionTrans.position;
+        Vector2 start = playerNode.endTrans.position;
+        Vector2 end = playerNode.startTrans.position;
 
         Vector2 dir = end - start;
 
-        // Wrapping process
         int hitCount = Physics2D.RaycastNonAlloc(start, dir.normalized, hits, dir.magnitude - 0.1f, touchLayer);
         for (int i = 0; i < hitCount; i++)
         {
@@ -72,7 +66,6 @@ public class GrappleRope : MonoBehaviour
                         continue;
                 }
 
-                print("hitta nemo");
                 Vector2 closestPoint = GetNearestVertex(hit, out int path, out int vertexIndex);
 
                 if (Vector2.Distance(end, closestPoint) > minDistance)
@@ -80,51 +73,40 @@ public class GrappleRope : MonoBehaviour
                     GameObject newObject = new GameObject("Node", typeof(Node));
                     newObject.transform.position = closestPoint;
 
-                    //colPathCenter = GetPathCenter(hit.collider as CompositeCollider2D, path);
                     Vector2 normal = GetVertexNormal(hit.collider as CompositeCollider2D, path, vertexIndex);
 
                     newObject.GetComponent<Node>().normalDirection = normal;
-                    //newObject.GetComponent<Node>().normalDirection = (closestPoint - colPathCenter).normalized;
-                    //newObject.GetComponent<Node>().normalDirection = hit.normal;
 
-                    RopeNode newClosest = new RopeNode(newObject.transform, closestAtBeginning.destinationTrans);
+                    RopeNode newClosest = new RopeNode(newObject.transform, playerNode.endTrans);
                     ropeNodes.Add(newClosest);
 
-                    closestAtBeginning.destinationTrans = newClosest.positionTrans;
+                    playerNode.endTrans = newClosest.startTrans;
 
                     anchorPos = newObject.transform.position;
 
                     player.OnGrappleHit(anchorPos);
                     player.grappleJoint.transform.position = anchorPos;
-
-                    lastNode = newObject;
                 }
             }
         }
 
         // Angle checking
-        if (ropeNodes.Count >= 2 && lastNode)
+        if (ropeNodes.Count >= 2 && GetLastNodeObject())
         {
-            Vector3 playerPos = player.transform.position;
+            Vector3 prevNodeDelta = 
+                ropeNodes[ropeNodes.Count - 2].endTrans.position - ropeNodes[ropeNodes.Count - 2].startTrans.position;
 
-            Vector3 currentNodePos = ropeNodes[ropeNodes.Count - 1].positionTrans.position;
+            Vector3 perpPrevNodeDelta = Vector2.Perpendicular(prevNodeDelta);
 
-            Vector3 prevNodePos = ropeNodes[ropeNodes.Count - 2].positionTrans.position;
+            Vector3 playerNodeDelta = 
+                ropeNodes[ropeNodes.Count - 1].endTrans.position - ropeNodes[ropeNodes.Count - 1].startTrans.position;
 
-            Vector3 nodePlane = currentNodePos - prevNodePos;
+            if (Vector3.Dot(perpPrevNodeDelta, GetLastNodeObject().GetComponent<Node>().normalDirection) < 0)
+                perpPrevNodeDelta *= -1f;
 
-            Vector3 rhs = playerPos - currentNodePos;
-
-            Vector3 lhs = new Vector3(-nodePlane.y, nodePlane.x, 0) / Mathf.Sqrt(nodePlane.x * nodePlane.x + nodePlane.y * nodePlane.y);
-
-            if (Vector3.Dot(lhs, lastNode.GetComponent<Node>().normalDirection) < 0)
-                lhs *= -1f;
-
-            //print(Vector3.Dot(rhs.normalized, lhs.normalized));
-
-            // Allow for margin of error since normal calculation isn't always accurate.
-            // But this will at least prevent the rope from crashing regardless of error.
-            if (Vector3.Dot(rhs.normalized, lhs.normalized) < .125f)
+            // Allow for margin of error since the dot product can end up in
+            // the positive despite the rope being bent.
+            if (Vector3.Dot(playerNodeDelta.normalized, perpPrevNodeDelta.normalized) < .125f)
             {
                 return;
             }
@@ -136,7 +118,7 @@ public class GrappleRope : MonoBehaviour
         // Unwrapping
         RopeNode prevPrevNode = ropeNodes[ropeNodes.Count - 2];
 
-        dir = (Vector2)prevPrevNode.destinationTrans.position - start;
+        dir = (Vector2)prevPrevNode.endTrans.position - start;
 
         hitCount = Physics2D.RaycastNonAlloc(start, dir.normalized, hits, dir.magnitude - 0.1f, touchLayer);
         for (int i = 0; i < hitCount; i++)
@@ -154,20 +136,18 @@ public class GrappleRope : MonoBehaviour
             }
         }
 
-        RopeNode rn = closestAtBeginning;
+        RopeNode rn = playerNode;
         ropeNodes.Remove(rn);
 
-        if (rn.positionTrans.GetComponent<Node>())
-            Destroy(rn.positionTrans.gameObject);
+        if (rn.startTrans.GetComponent<Node>())
+            Destroy(rn.startTrans.gameObject);
 
-        prevPrevNode.destinationTrans = player.transform;
+        prevPrevNode.endTrans = player.transform;
 
-        anchorPos = prevPrevNode.positionTrans.position;
+        anchorPos = prevPrevNode.startTrans.position;
 
         player.OnGrappleHit(anchorPos);
         player.grappleJoint.transform.position = anchorPos;
-
-        lastNode = prevPrevNode.positionTrans.gameObject;
     }
 
     private void HandleLineRenderer()
@@ -179,8 +159,8 @@ public class GrappleRope : MonoBehaviour
 
         for (int i = 0; i < lineRenderer.positionCount && i < ropeNodes.Count; i++)
         {
-            lineRenderer.SetPosition(i, ropeNodes[i].positionTrans.position);
-            lineRenderer.SetPosition(i + 1, ropeNodes[i].destinationTrans.position);
+            lineRenderer.SetPosition(i, ropeNodes[i].startTrans.position);
+            lineRenderer.SetPosition(i + 1, ropeNodes[i].endTrans.position);
         }
     }
 
@@ -226,10 +206,10 @@ public class GrappleRope : MonoBehaviour
 
         for (int i = 0; i < ropeNodes.Count; i++)
         {
-            Gizmos.DrawSphere(ropeNodes[i].destinationTrans.position, 0.1f);
+            Gizmos.DrawSphere(ropeNodes[i].endTrans.position, 0.1f);
 
-            if (ropeNodes[i].positionTrans && ropeNodes[i].destinationTrans)
-                Debug.DrawLine(ropeNodes[i].positionTrans.position, ropeNodes[i].destinationTrans.position, Color.red);
+            if (ropeNodes[i].startTrans && ropeNodes[i].endTrans)
+                Debug.DrawLine(ropeNodes[i].startTrans.position, ropeNodes[i].endTrans.position, Color.red);
         }
 
         Gizmos.color = new Color(0, 0, 1, 0.3f);
@@ -244,18 +224,12 @@ public class GrappleRope : MonoBehaviour
         vertexIndex = -1;
 
         if (!cc2d)
-        {
-            
             return hit.point;
-        }
 
         Vector2 point = Vector2.zero;
-
         float currentLength = Mathf.Infinity;
-
         for (int i = 0; i < cc2d.pathCount; i++)
         {
-            
             for (int ii = 0; ii < cc2d.GetPath(i, vertexCache); ii++)
             {
                 float thisLength = Vector2.SqrMagnitude((Vector2)hit.point - vertexCache[ii]);
@@ -276,8 +250,8 @@ public class GrappleRope : MonoBehaviour
     {
         foreach (RopeNode node in ropeNodes)
         {
-            if (node.positionTrans.GetComponent<Node>())
-                Destroy(node.positionTrans.gameObject);
+            if (node.startTrans.GetComponent<Node>())
+                Destroy(node.startTrans.gameObject);
         }
     }
 
@@ -286,13 +260,13 @@ public class GrappleRope : MonoBehaviour
 [System.Serializable]
 public class RopeNode
 {
-    public RopeNode(Transform positionTrans, Transform destinationTrans)
+    public RopeNode(Transform startTrans, Transform endTrans)
     {
-        this.positionTrans = positionTrans;
-        this.destinationTrans = destinationTrans;
+        this.startTrans = startTrans;
+        this.endTrans = endTrans;
     }
 
-    public Transform positionTrans;
-    public Transform destinationTrans;
+    public Transform startTrans;
+    public Transform endTrans;
 }
 
